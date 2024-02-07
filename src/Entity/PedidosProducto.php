@@ -19,6 +19,14 @@ class PedidosProducto
     #[ORM\Column]
     private ?int $unidades = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Producto $producto = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Pedidos $pedido = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +52,30 @@ class PedidosProducto
     public function setUnidades(int $unidades): static
     {
         $this->unidades = $unidades;
+
+        return $this;
+    }
+
+    public function getProducto(): ?Producto
+    {
+        return $this->producto;
+    }
+
+    public function setProducto(?Producto $producto): static
+    {
+        $this->producto = $producto;
+
+        return $this;
+    }
+
+    public function getPedido(): ?Pedidos
+    {
+        return $this->pedido;
+    }
+
+    public function setPedido(?Pedidos $pedido): static
+    {
+        $this->pedido = $pedido;
 
         return $this;
     }

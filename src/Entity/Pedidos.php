@@ -23,6 +23,10 @@ class Pedidos
     #[ORM\Column]
     private ?bool $enviado = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Restaurante $restaurante = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +64,18 @@ class Pedidos
     public function setEnviado(bool $enviado): static
     {
         $this->enviado = $enviado;
+
+        return $this;
+    }
+
+    public function getRestaurante(): ?Restaurante
+    {
+        return $this->restaurante;
+    }
+
+    public function setRestaurante(?Restaurante $restaurante): static
+    {
+        $this->restaurante = $restaurante;
 
         return $this;
     }
