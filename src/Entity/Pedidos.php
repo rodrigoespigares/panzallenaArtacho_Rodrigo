@@ -10,10 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Pedidos
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column]
     private ?int $codPed = null;
 
@@ -24,13 +20,8 @@ class Pedidos
     private ?bool $enviado = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: 'restaurante_id', referencedColumnName: 'cod_res', nullable: false)]
     private ?Restaurante $restaurante = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getCodPed(): ?int
     {

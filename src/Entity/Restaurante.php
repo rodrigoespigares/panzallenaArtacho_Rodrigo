@@ -13,7 +13,7 @@ class Restaurante implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $cod_res = null;
 
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
@@ -27,9 +27,9 @@ class Restaurante implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    public function getId(): ?int
+    public function getCod_res(): ?int
     {
-        return $this->id;
+        return $this->cod_res;
     }
 
     public function getEmail(): ?string

@@ -9,10 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Categoria
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column]
     private ?int $codCat = null;
 
@@ -22,10 +18,6 @@ class Categoria
     #[ORM\Column(length: 200)]
     private ?string $descripcion = null;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getCodCat(): ?int
     {

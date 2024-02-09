@@ -9,10 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Producto
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column]
     private ?int $codProd = null;
 
@@ -29,13 +25,14 @@ class Producto
     private ?int $stock = null;
 
     #[ORM\ManyToOne(inversedBy: 'productos')]
-    #[ORM\JoinColumn(nullable: false)]
+#[ORM\JoinColumn(name: 'categoria_id', referencedColumnName: 'cod_cat', nullable: false)]
     private ?Categoria $categoria = null;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    #[ORM\Column(length: 255)]
+    private ?string $foto = null;
+
+    #[ORM\Column]
+    private ?float $precio = null;
 
     public function getCodProd(): ?int
     {
@@ -105,6 +102,30 @@ class Producto
     public function setCategoria(?Categoria $categoria): static
     {
         $this->categoria = $categoria;
+
+        return $this;
+    }
+
+    public function getFoto(): ?string
+    {
+        return $this->foto;
+    }
+
+    public function setFoto(string $foto): static
+    {
+        $this->foto = $foto;
+
+        return $this;
+    }
+
+    public function getPrecio(): ?float
+    {
+        return $this->precio;
+    }
+
+    public function setPrecio(float $precio): static
+    {
+        $this->precio = $precio;
 
         return $this;
     }

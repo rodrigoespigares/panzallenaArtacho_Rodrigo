@@ -9,10 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 class PedidosProducto
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column]
     private ?int $codPedProd = null;
 
@@ -20,17 +16,12 @@ class PedidosProducto
     private ?int $unidades = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: 'producto_id', referencedColumnName: 'cod_prod', nullable: false)]
     private ?Producto $producto = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: 'pedido_id', referencedColumnName: 'cod_ped', nullable: false)]
     private ?Pedidos $pedido = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getCodPedProd(): ?int
     {
