@@ -71,7 +71,7 @@ class RestauranteController extends AbstractController
     #[Route('/{id}', name: 'app_restaurante_delete', methods: ['POST'])]
     public function delete(Request $request, Restaurante $restaurante, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$restaurante->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$restaurante->getCod_res(), $request->request->get('_token'))) {
             $entityManager->remove($restaurante);
             $entityManager->flush();
         }
