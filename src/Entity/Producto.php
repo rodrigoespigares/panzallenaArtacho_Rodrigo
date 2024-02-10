@@ -4,8 +4,12 @@ namespace App\Entity;
 
 use App\Repository\ProductoRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 #[ORM\Entity(repositoryClass: ProductoRepository::class)]
+#[Vich\Uploadable]
 class Producto
 {
     #[ORM\Id]
@@ -30,9 +34,17 @@ class Producto
 
     #[ORM\Column(length: 255)]
     private ?string $foto = null;
+    /**
+     * @Vich\UploadableField(mapping="product_images", fileNameProperty="imageName")
+     * @var File|null
+     */
+    private $imageFile;
 
     #[ORM\Column]
     private ?float $precio = null;
+
+
+
 
     public function getCodProd(): ?int
     {
@@ -128,5 +140,9 @@ class Producto
         $this->precio = $precio;
 
         return $this;
+    }
+
+    public function __toString(){
+        return (string) $this->categoria;
     }
 }

@@ -1,14 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BaseController!{% endblock %}
+{% block title %}Hello BaseController!
+{% endblock %}
 
 {% block body %}
+	{% for categorium in categorias %}
+		<h3>{{ categorium.nombre }}</h3>
 
-<div class="example-wrapper">
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/var/www/html/restaurante/src/Controller/BaseController.php</code></li>
-        <li>Your template at <code>/var/www/html/restaurante/templates/base/index.html.twig</code></li>
-    </ul>
-</div>
+		<section class="d-flex">
+            {% for producto in productos %}
+                {% if categorium.codCat == producto.categoria.codCat %}
+                    <article>
+                        <p>{{ producto.nombre }}</p>
+                        <p>{{ producto.descripcion }}</p>
+                        <p>{{ producto.foto }}</p>
+                        <p>{{ producto.precio }}</p>
+                    </article>
+                {% endif %}
+            {% endfor %}
+        </section>
+	{% endfor %}
 {% endblock %}

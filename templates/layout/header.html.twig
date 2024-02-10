@@ -13,9 +13,12 @@
                     
                     {% if app.user.roles[0]!="restaurante" %}
 					<li>
-						<a class="dropdown-item" href="/producto">Productos</a>
+						<a class="dropdown-item" href="/pedidos">Pedidos</a>
 					</li>
 					{% if app.user.roles[0]=="admin" %}
+					<li>
+						<a class="dropdown-item" href="/producto">Productos</a>
+					</li>
 					<li>
 						<a class="dropdown-item" href="/categoria">Categorias</a>
 					</li>

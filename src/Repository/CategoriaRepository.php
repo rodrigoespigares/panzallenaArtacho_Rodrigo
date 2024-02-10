@@ -45,4 +45,15 @@ class CategoriaRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function extract(){
+    // $entityManager = $this->getDoctrine()->getManager();
+    $query = $this->createQueryBuilder('c')
+        ->innerJoin('App\Entity\Producto', 'p', 'WITH', 'c.codCat = p.categoria')
+        ->getQuery();
+
+    $categorias = $query->getResult();
+    // Haz algo con las categorías obtenidas, por ejemplo, devuélvelas o realiza alguna operación.
+    return $categorias;
+}
 }

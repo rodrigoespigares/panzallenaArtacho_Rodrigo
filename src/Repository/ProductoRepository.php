@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Producto;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @extends ServiceEntityRepository<Producto>
@@ -45,4 +46,12 @@ class ProductoRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function extract()
+{
+    
+    // Assuming your entity class is "Producto"
+    return $this->findBy([], null, 5);
+    
+}
 }
