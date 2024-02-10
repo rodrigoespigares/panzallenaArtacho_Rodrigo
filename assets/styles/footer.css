@@ -33,3 +33,7 @@
 #footer__info .metodos__icon i{
     font-size: 3rem;
 }
+
+#footer a:hover{
+    color: var(--tertiary);
+}

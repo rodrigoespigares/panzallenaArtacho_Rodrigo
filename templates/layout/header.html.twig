@@ -1,38 +1,36 @@
-<header>
-	<h1>PanzaLlena</h1>
-	<div>
-		<div>
-			{% if app.user %}
-				<p>Sesión iniciada como:
-					{{ app.user.email }}</p>
-				<!-- Puedes mostrar más información sobre el usuario si es necesario -->
-			{% else %}
-				<p>No has iniciado sesión</p>
-			{% endif %}
-		</div>
+<header class="d-flex flex-column">
+	<div class="header__logo">
+		<h1>PanzaLlena</h1>
 		{% if app.user %}
 			<div class="dropdown">
-				<button class="btn btn-secondary dropdown-toggle fs-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Opciones
+				<button class="btn btn-secondary dropdown-toggle boton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ app.user.email }}</p>
 				</button>
 				<ul class="dropdown-menu">
-					<li>
-						<a class="dropdown-item" href="/cesta">Cesta</a>
-					</li>
                     <li>
 						<a class="dropdown-item" href="/logout">Cerrar sesión</a>
 					</li>
                     
-                    {% if app.user.roles[0]=="admin" %}
+                    {% if app.user.roles[0]!="restaurante" %}
 					<li>
-						<a class="dropdown-item" href="#">Another action</a>
+						<a class="dropdown-item" href="#">Productos</a>
+					</li>
+					{% if app.user.roles[0]=="admin" %}
+					<li>
+						<a class="dropdown-item" href="#">Categorias</a>
 					</li>
 					<li>
-						<a class="dropdown-item" href="#">Something else here</a>
+						<a class="dropdown-item" href="#">Usuarios</a>
 					</li>
+					{% endif %}
                     {% endif %}
 				</ul>
 			</div>
 		{% endif %}
+	</div>
+	<div class="header__menu">
+		<a href="/index">Home</a>
+		<a href="/cesta">Cesta</a>
+		<a href="/pedidos">Mis pedidos</a>
 	</div>
 </header>
