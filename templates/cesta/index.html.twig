@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CestaController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+    <div class="example-wrapper">
+        <h1>Cesta</h1>
+        {% if cesta!="" %}
+        <table>
+            <thead>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Precio Unidad</th>
+                <th>Precio Total productos</th>
+                <th>otros</th>
+            </thead>
+            <tbody>
+
+                {% for producto in cesta %}
+                    <tr>
+                        <td>{{ producto.producto.nombre }}</td>
+                        <td>{{ producto.cantidad }}</td>
+                        <td>{{ producto.producto.precio }}</td>
+                        <td>{{ producto.producto.precio*producto.cantidad }}</td>
+                        <td>
+                            <a href="{{ path('app_cesta_new', {'codProd': producto.producto.codProd}) }}">Mas</a>
+                            <a href="{{ path('app_cesta_menos', {'codProd': producto.producto.codProd}) }}">Menos</a>
+                            <a href="{{ path('app_cesta_delete', {'codProd': producto.producto.codProd}) }}">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+            {% else %}
+            <p>Su carrito no tiene productos</p>
+        {% endif %}
+
+    </div>
+
+
+{% endblock %}

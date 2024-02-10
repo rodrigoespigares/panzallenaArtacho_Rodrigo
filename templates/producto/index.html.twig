@@ -29,6 +29,7 @@
                 <td>{{ producto.foto }}</td>
                 <td>{{ producto.precio }}</td>
                 <td>
+                    <a href="{{ path('app_cesta_new', {'codProd': producto.codProd}) }}">Añadir a la cesta</a>
                     <a href="{{ path('app_producto_show', {'codProd': producto.codProd}) }}">show</a>
                     <a href="{{ path('app_producto_edit', {'codProd': producto.codProd}) }}">edit</a>
                 </td>
