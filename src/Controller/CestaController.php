@@ -62,6 +62,7 @@ class CestaController extends AbstractController
                 if ($carrito['id']==($producto->getCodProd())){
                     if ($carrito['cantidad']==1){
                         unset($_SESSION['carrito'][$i]);
+
                     }else{
                         $carrito['cantidad']--;
                         $_SESSION['carrito'][$i]=$carrito;

@@ -4,7 +4,7 @@
 
 {% block body %}
         <h1 class="display-1">Cesta</h1>
-        {% if cesta!="" %}
+        {% if cesta|length >0 %}
         <table>
             <thead>
                 <th>Nombre</th>
