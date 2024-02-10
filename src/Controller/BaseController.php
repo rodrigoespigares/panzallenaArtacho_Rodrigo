@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class BaseController extends AbstractController
 {
-    #[Route('/', name: 'app_base')]
+    #[Route('/index', name: 'app_base')]
     public function index(CategoriaRepository $categoriaRepository): Response
     {
         return $this->render('base/index.html.twig', [
