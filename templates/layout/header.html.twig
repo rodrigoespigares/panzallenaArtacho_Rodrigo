@@ -1,0 +1,43 @@
+<header>
+	<h1>PanzaLlena</h1>
+	<div>
+		{% for categorium in categorias %}
+			<p>{{ categorium.nombre }}</p>
+		{% endfor %}
+	</div>
+	<div>
+		<div>
+			{% if app.user %}
+				<p>Sesión iniciada como:
+					{{ app.user.email }}</p>
+				<!-- Puedes mostrar más información sobre el usuario si es necesario -->
+			{% else %}
+				<p>No has iniciado sesión</p>
+			{% endif %}
+		</div>
+		{% if app.user %}
+			<div class="dropdown">
+				<button class="btn btn-secondary dropdown-toggle fs-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Opciones
+				</button>
+				<ul class="dropdown-menu">
+					<li>
+						<a class="dropdown-item" href="#">Carrito</a>
+					</li>
+                    <li>
+						<a class="dropdown-item" href="/logout">Cerrar sesión</a>
+					</li>
+                    
+                    {% if app.user.roles[0]=="admin" %}
+					<li>
+						<a class="dropdown-item" href="#">Another action</a>
+					</li>
+					<li>
+						<a class="dropdown-item" href="#">Something else here</a>
+					</li>
+                    {% endif %}
+				</ul>
+			</div>
+		{% endif %}
+	</div>
+</header>
