@@ -1,11 +1,6 @@
 <header>
 	<h1>PanzaLlena</h1>
 	<div>
-		{% for categorium in categorias %}
-			<p>{{ categorium.nombre }}</p>
-		{% endfor %}
-	</div>
-	<div>
 		<div>
 			{% if app.user %}
 				<p>Sesión iniciada como:
