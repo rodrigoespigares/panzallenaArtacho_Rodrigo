@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,7 +16,7 @@ class MailerController extends AbstractController
     {
         try{
         $email = (new Email())
-            ->from('respigares.spam@gmail.com')
+            ->from(new Address('respigares.spam@gmail.com','Rodrigo'))
             ->to('respigares.spam@gmail.com')
             //->cc('cc@example.com')
             //->bcc('bcc@example.com')

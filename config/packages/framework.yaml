@@ -18,7 +18,7 @@ framework:
         log: true
     
     mailer:
-        dsn: 'smtp://97e8fa22be5766:7773817ec5ea43@sandbox.smtp.mailtrap.io:2525'
+        dsn: 'sync://default'
 
 when@test:
     framework:
