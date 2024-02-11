@@ -25,14 +25,7 @@
         <button class="btn btn-success boto">
             <a href="{{ path('app_base') }}">back to list</a>
         </button>
-        {% if app.user.roles[0]=="ROLE_ADMIN" %}
-            <button class="btn btn-success boto">
-                <a href="{{ path('app_pedidos_edit', {'codPed': pedido.codPed}) }}">edit</a>
-            </button>
-            <div class="boton__delete">
-                {{ include('pedidos/_delete_form.html.twig') }}
-            </div>
-        {% endif %}
+        
     </div>
 
 
