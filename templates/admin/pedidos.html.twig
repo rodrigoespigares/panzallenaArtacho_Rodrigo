@@ -1,0 +1,46 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Pedidos{% endblock %}
+
+{% block body %}
+    <div>
+        <h1>Pedidos</h1>
+
+        <table class="table">
+        <thead>
+            <tr>
+                <th>CodPed</th>
+                <th>Fecha</th>
+                <th>Enviado</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pedido in pedidos %}
+            <tr>
+                <td>{{ pedido.codPed }}</td>
+                <td>{{ pedido.fecha ? pedido.fecha|date('Y-m-d') : '' }}</td>
+                <td>{{ pedido.enviado ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_pedidos_show', {'codPed': pedido.codPed}) }}">Ver</a>
+                    <a href="{{ path('app_pedidos_edit', {'codPed': pedido.codPed}) }}">Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+    <div>
+        {% if editar %}
+            {{ include('pedidos/_form.html.twig',{'button_label': 'Editar'}) }}
+
+            <a href="{{ path('app_categoria_index_admin') }}">back to list</a>
+        {% endif %}
+        
+    </div>
+{% endblock %}

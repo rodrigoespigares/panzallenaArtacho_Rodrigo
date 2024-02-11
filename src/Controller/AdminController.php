@@ -6,9 +6,11 @@ use App\Entity\Categoria;
 use App\Entity\Pedidos;
 use App\Entity\Producto;
 use App\Form\CategoriaType;
+use App\Form\EditaPeiddosType;
 use App\Form\PedidosType;
 use App\Form\ProductoType;
 use App\Repository\CategoriaRepository;
+use App\Repository\PedidosRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -86,7 +88,7 @@ class AdminController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_categoria_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_categoria_index_admin', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/categoria.html.twig', [
@@ -105,24 +107,35 @@ class AdminController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_categoria_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_categoria_index_admin', [], Response::HTTP_SEE_OTHER);
     }
     /** PEDIDOS */
-    #[Route('/pedidos/{codPed}/edit', name: 'app_pedidos_edit', methods: ['GET', 'POST'])]
-    public function pedEdit(Request $request, Pedidos $pedido, EntityManagerInterface $entityManager): Response
+    #[Route('/pedidos', name: 'app_pedidos_index_admin', methods: ['GET', 'POST'])]
+    public function pedidosIndex(PedidosRepository $pedidosRepository): Response
     {
-        $form = $this->createForm(PedidosType::class, $pedido);
+
+        return $this->render('admin/pedidos.html.twig', [
+            'pedidos' => $pedidosRepository->findAll(),
+            'editar'=>false,
+        ]);
+    }
+    #[Route('/pedidos/{codPed}/edit', name: 'app_pedidos_edit', methods: ['GET', 'POST'])]
+    public function pedEdit(Request $request, Pedidos $pedido, EntityManagerInterface $entityManager,PedidosRepository $pedidosRepository): Response
+    {
+        $form = $this->createForm(EditaPeiddosType::class, $pedido);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_pedidos_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_pedidos_index_admin', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('pedidos/edit.html.twig', [
+        return $this->render('admin/pedidos.html.twig', [
+            'pedidos' => $pedidosRepository->findAll(),
             'pedido' => $pedido,
             'form' => $form,
+            'editar'=> true,
         ]);
     }
 
