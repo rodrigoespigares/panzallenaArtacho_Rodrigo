@@ -86,14 +86,41 @@ class ProductoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Manejar la carga de la imagen
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('foto')->getData();
+
+            // Comprobar si se ha subido una nueva imagen
+            if ($imageFile) {
+                // Generar un nombre único para el archivo
+                $newFilename = uniqid().'.'.$imageFile->guessExtension();
+
+                // Mover el archivo al directorio donde se guardará
+                try {
+                    $imageFile->move(
+                        $this->getParameter('your_directory'), // Directorio donde se guarda la imagen
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // Manejar una excepción si ocurre algún error al mover el archivo
+                    // Por ejemplo, podrías mostrar un mensaje de error al usuario
+                }
+
+                // Actualizar la entidad Producto con el nombre de la nueva imagen
+                $producto->setFoto($newFilename);
+            }
+
+            // Persistir los cambios en el producto en la base de datos
             $entityManager->flush();
 
+            // Redirigir al usuario a la página de índice de productos después de editar el producto
             return $this->redirectToRoute('app_producto_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        // Renderizar el formulario para editar el producto
         return $this->render('producto/edit.html.twig', [
             'producto' => $producto,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
