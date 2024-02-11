@@ -1,0 +1,62 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Productos{% endblock %}
+
+{% block body %}
+    <div>
+        <h1>productos</h1>
+
+        <table class="table">
+        <thead>
+            <tr>
+                <th>CodProd</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Peso</th>
+                <th>Stock</th>
+                <th>Foto</th>
+                <th>Precio</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for producto in productos %}
+            <tr>
+                <td>{{ producto.codProd }}</td>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.descripcion }}</td>
+                <td>{{ producto.peso }}</td>
+                <td>{{ producto.stock }}</td>
+                <td>{{ producto.foto }}</td>
+                <td>{{ producto.precio }}</td>
+                <td>
+                    <a href="{{ path('app_producto_show', {'codProd': producto.codProd}) }}">Ver</a>
+                    {% if app.user.roles[0]=="ROLE_ADMIN" %}
+                    <a href="{{ path('app_producto_edit', {'codProd': producto.codProd}) }}">Editar</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+    <div>
+        {% if editar %}
+            {{ include('producto/_form.html.twig', {'button_label': 'Editar'}) }}
+
+            <a href="{{ path('app_producto_index_admin') }}">back to list</a>
+
+            {{ include('producto/_delete_form.html.twig') }}
+        {% else %}
+            {{ include('producto/_form.html.twig') }}
+
+            <a href="{{ path('app_producto_index_admin') }}">back to list</a>
+        {% endif %}
+        
+    </div>
+{% endblock %}

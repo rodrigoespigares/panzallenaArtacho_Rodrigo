@@ -11,6 +11,7 @@ use App\Form\PedidosType;
 use App\Form\ProductoType;
 use App\Repository\CategoriaRepository;
 use App\Repository\PedidosRepository;
+use App\Repository\ProductoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -197,6 +198,54 @@ class AdminController extends AbstractController
         ]);
     }
     /** PRODUCTOS */
+    #[Route('/producto', name: 'app_producto_index_admin', methods: ['GET', 'POST'])]
+    public function productoNew(Request $request, ProductoRepository $productoRepository, EntityManagerInterface $entityManager): Response
+    {
+        $producto = new Producto();
+        $form = $this->createForm(ProductoType::class, $producto);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Manejar la carga de la imagen
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('foto')->getData();
+
+            // Comprobar si se ha subido una imagen
+            if ($imageFile) {
+                // Generar un nombre único para el archivo
+                $newFilename = uniqid().'.'.$imageFile->guessExtension();
+
+                // Mover el archivo al directorio donde se guardará
+                try {
+                    $imageFile->move(
+                        $this->getParameter('your_directory'), // Directorio donde se guarda la imagen
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // Manejar una excepción si ocurre algún error al mover el archivo
+                    // Por ejemplo, podrías mostrar un mensaje de error al usuario
+                }
+
+                // Actualizar la entidad Producto con el nombre de la imagen
+                $producto->setFoto($newFilename);
+            }
+
+            // Persistir el producto en la base de datos
+            $entityManager->persist($producto);
+            $entityManager->flush();
+
+            // Redirigir al usuario a la página de índice de productos después de agregar el producto
+            return $this->redirectToRoute('app_producto_index_admin', [], Response::HTTP_SEE_OTHER);
+        }
+
+        // Renderizar el formulario para agregar un nuevo producto
+        return $this->render('admin/producto.html.twig', [
+            'productos' => $productoRepository->findAll(),
+            'editar'=>false,
+            'producto' => $producto,
+            'form' => $form->createView(),
+        ]);
+    }
     #[Route('/producto/{codProd}/edit', name: 'app_producto_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Producto $producto, EntityManagerInterface $entityManager): Response
     {

@@ -34,13 +34,14 @@
         </tbody>
     </table>
     </div>
-
+{% if editar %}
     <div>
-        {% if editar %}
+        
             {{ include('pedidos/_form.html.twig',{'button_label': 'Editar'}) }}
 
             <a href="{{ path('app_categoria_index_admin') }}">back to list</a>
-        {% endif %}
+        
         
     </div>
+    {% endif %}
 {% endblock %}
