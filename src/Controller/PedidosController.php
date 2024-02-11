@@ -78,32 +78,5 @@ class PedidosController extends AbstractController
         ]);
     }
 
-    #[Route('/{codPed}/edit', name: 'app_pedidos_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Pedidos $pedido, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(PedidosType::class, $pedido);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_pedidos_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('pedidos/edit.html.twig', [
-            'pedido' => $pedido,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{codPed}', name: 'app_pedidos_delete', methods: ['POST'])]
-    public function delete(Request $request, Pedidos $pedido, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$pedido->getCodPed(), $request->request->get('_token'))) {
-            $entityManager->remove($pedido);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_pedidos_index', [], Response::HTTP_SEE_OTHER);
-    }
+    
 }
