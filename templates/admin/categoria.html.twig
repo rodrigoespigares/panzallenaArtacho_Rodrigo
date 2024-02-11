@@ -1,0 +1,60 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Categorias{% endblock %}
+
+{% block body %}
+    <div>
+        <h1>Categorias</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>CodCat</th>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    {% if app.user.roles[0]=="ROLE_ADMIN" %}
+                    <th>actions</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+            {% for categorium in categorias %}
+                <tr>
+                    <td>{{ categorium.codCat }}</td>
+                    <td>{{ categorium.nombre }}</td>
+                    <td>{{ categorium.descripcion }}</td>
+                    {% if app.user.roles[0]=="ROLE_ADMIN" %}
+                    <td>
+                        <a href="{{ path('app_categoria_show', {'codCat': categorium.codCat}) }}">Ver</a>
+                        <a href="{{ path('app_categoria_edit', {'codCat': categorium.codCat}) }}">Editar</a>
+                    </td>
+                    {% endif %}
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        {% if editar %}
+             <h1>Edit Categoria</h1>
+
+            {{ include('categoria/_form.html.twig', {'button_label': 'Update'}) }}
+
+            <a href="{{ path('app_categoria_index_admin') }}">back to list</a>
+
+            {{ include('categoria/_delete_form.html.twig') }}
+        {% else %}
+            <h1>Create new Categoria</h1>
+
+            {{ include('categoria/_form.html.twig') }}
+
+            <a href="{{ path('app_categoria_index_admin') }}">back to list</a>
+        {% endif %}
+        
+    </div>
+{% endblock %}

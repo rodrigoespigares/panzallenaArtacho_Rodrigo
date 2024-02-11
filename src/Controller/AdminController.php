@@ -8,6 +8,7 @@ use App\Entity\Producto;
 use App\Form\CategoriaType;
 use App\Form\PedidosType;
 use App\Form\ProductoType;
+use App\Repository\CategoriaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,6 +26,29 @@ class AdminController extends AbstractController
         ]);
     }
     /** Categorias */
+    #[Route('/categoria', name: 'app_categoria_index_admin', methods: ['GET', 'POST'])]
+    public function indexCategoria(Request $request, CategoriaRepository $categoriaRepository, EntityManagerInterface $entityManager): Response
+    {
+        $categorium = new Categoria();
+        $form = $this->createForm(CategoriaType::class, $categorium);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($categorium);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_categoria_index_admin', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('admin/categoria.html.twig', [
+            'categorias' => $categoriaRepository->findAll(),
+            'form' => $form,
+            'editar'=>false,
+        ]);
+    }
+
+
+
     #[Route('/categoria/new', name: 'app_categoria_new', methods: ['GET', 'POST'])]
     public function catNew(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -36,7 +60,7 @@ class AdminController extends AbstractController
             $entityManager->persist($categorium);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_categoria_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_categoria_index_admin', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('categoria/new.html.twig', [
@@ -54,7 +78,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/categoria/{codCat}/edit', name: 'app_categoria_edit', methods: ['GET', 'POST'])]
-    public function catEdit(Request $request, Categoria $categorium, EntityManagerInterface $entityManager): Response
+    public function catEdit(Request $request, Categoria $categorium, EntityManagerInterface $entityManager, CategoriaRepository $categoriaRepository): Response
     {
         $form = $this->createForm(CategoriaType::class, $categorium);
         $form->handleRequest($request);
@@ -65,9 +89,11 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('app_categoria_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('categoria/edit.html.twig', [
+        return $this->render('admin/categoria.html.twig', [
+            'categorias' => $categoriaRepository->findAll(),
             'categorium' => $categorium,
             'form' => $form,
+            'editar'=>true,
         ]);
     }
 
