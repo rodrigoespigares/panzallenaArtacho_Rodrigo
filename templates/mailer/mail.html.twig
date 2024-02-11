@@ -1,0 +1,24 @@
+<h1>Detalles de tu pedido</h1>
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Precio total</th>
+    </tr>
+{% set total = 0 %}
+{% for producto in cesta %}
+    
+    <tr>
+        <td>{{ producto.producto.nombre }}</td>
+        <td>{{ producto.cantidad }}</td>
+        <td>{{ producto.producto.precio }}</td>
+        <td>{{ producto.producto.precio*producto.cantidad }}</td>
+    </tr>
+    {% set total = total + (producto.producto.precio * producto.cantidad) %}
+{% endfor %}
+<tr>
+    <td colspan='3'>Total</td>
+    <td><b>{{total}}</b></td>
+</tr>
+</table>

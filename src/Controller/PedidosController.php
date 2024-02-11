@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use DateTime;
+use Symfony\Component\Mailer\MailerInterface;
 
 #[Route('/pedidos')]
 class PedidosController extends AbstractController
@@ -21,13 +22,20 @@ class PedidosController extends AbstractController
     #[Route('/', name: 'app_pedidos_index', methods: ['GET'])]
     public function index(PedidosRepository $pedidosRepository): Response
     {
+
+        $user = $this->getUser();
+        if ($user instanceof \App\Entity\Restaurante) {
+            $restauranteId = $user->getCod_res(); // Ajusta el método según la implementación en tu clase User
+            $pedidos = $pedidosRepository->findBy(['restaurante' => $restauranteId]);
+        }
+
         return $this->render('pedidos/index.html.twig', [
-            'pedidos' => $pedidosRepository->findAll(),
+            'pedidos' => $pedidos,
         ]);
     }
 
     #[Route('/new', name: 'app_pedidos_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,SessionInterface $sesion, PedidosRepository $pedidosRepository,RestauranteRepository $restauranteRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,SessionInterface $sesion, PedidosRepository $pedidosRepository,RestauranteRepository $restauranteRepository, MailerController $mail, MailerInterface $mailerInterface): Response
     {
         $pedido = new Pedidos();
         $form = $this->createForm(PedidosType::class, $pedido);
@@ -47,7 +55,10 @@ class PedidosController extends AbstractController
             }
             $pedidosRepository->anadir($data,$sesion->get("carrito"),$restauranteRepository, $entityManager);
             
-            return $this->redirectToRoute('app_pedidos_index', [], Response::HTTP_SEE_OTHER);
+            $mail->sendEmail($mailerInterface,$sesion->get('carrito'));
+            $mail->sendEmailPedidos($mailerInterface,$sesion->get('carrito'));
+            $sesion->set("carrito",[]);
+            return $this->redirectToRoute('app_base', [], Response::HTTP_SEE_OTHER);
         }
         $carrito = $sesion->get('carrito');
 
