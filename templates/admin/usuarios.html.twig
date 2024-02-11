@@ -12,7 +12,6 @@
                     <th>Cod_res</th>
                     <th>Email</th>
                     <th>Roles</th>
-                    <th>Password</th>
                     <th>IsVerified</th>
                     <th>actions</th>
                 </tr>
@@ -23,7 +22,6 @@
                     <td>{{ restaurante.codRes }}</td>
                     <td>{{ restaurante.email }}</td>
                     <td>{{ restaurante.roles ? restaurante.roles|json_encode : '' }}</td>
-                    <td>{{ restaurante.password }}</td>
                     <td>{{ restaurante.isVerified ? 'Yes' : 'No' }}</td>
                     <td>
                         <a href="{{ path('app_restaurante_edit', {'cod_res': restaurante.cod_res}) }}">Editar</a>
