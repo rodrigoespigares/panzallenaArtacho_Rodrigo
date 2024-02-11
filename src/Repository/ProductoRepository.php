@@ -54,4 +54,13 @@ public function extract()
     return $this->findBy([], null, 5);
     
 }
+public function restar($id, $resta, $entityManager){
+    $productoRepository = $entityManager->getRepository(Producto::class);
+    $producto = $productoRepository->find($id);
+    $nuevaCantidad = $producto->getStock() - $resta;
+    $producto->setStock($nuevaCantidad);
+    $entityManager->persist($producto);
+    $entityManager->flush();
+}
+
 }

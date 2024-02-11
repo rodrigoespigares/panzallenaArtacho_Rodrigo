@@ -6,6 +6,7 @@ use App\Entity\Pedidos;
 use App\Entity\Restaurante;
 use App\Form\PedidosType;
 use App\Repository\PedidosRepository;
+use App\Repository\ProductoRepository;
 use App\Repository\RestauranteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,39 +36,43 @@ class PedidosController extends AbstractController
     }
 
     #[Route('/new', name: 'app_pedidos_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,SessionInterface $sesion, PedidosRepository $pedidosRepository,RestauranteRepository $restauranteRepository, MailerController $mail, MailerInterface $mailerInterface): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,SessionInterface $sesion, PedidosRepository $pedidosRepository,RestauranteRepository $restauranteRepository, MailerController $mail, MailerInterface $mailerInterface, ProductoRepository $productoRepository): Response
     {
-        $pedido = new Pedidos();
-        $form = $this->createForm(PedidosType::class, $pedido);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            $user = $this->getUser();
-            if ($user instanceof \App\Entity\Restaurante) {
-                $data['time'] = time();
-                $dateTime = new DateTime();
-                $dateTime->setTimestamp($data['time']);
-                // Formatear la fecha y hora en el formato deseado
-                $data['fecha'] = $dateTime->format('Y-m-d H:i:s');
-                $data['enviado'] = false;
-                // Obtén el cod_res del usuario
-                $data['restaurante_id'] = $codRes = $user->getCod_res();
-            }
-            $pedidosRepository->anadir($data,$sesion->get("carrito"),$restauranteRepository, $entityManager);
-            
-            $mail->sendEmail($mailerInterface,$sesion->get('carrito'));
-            $mail->sendEmailPedidos($mailerInterface,$sesion->get('carrito'));
-            $sesion->set("carrito",[]);
-            return $this->redirectToRoute('app_base', [], Response::HTTP_SEE_OTHER);
-        }
-        $carrito = $sesion->get('carrito');
+        if(count($sesion->get("carrito"))>0){
+            $pedido = new Pedidos();
+            $form = $this->createForm(PedidosType::class, $pedido);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                
+                $user = $this->getUser();
+                if ($user instanceof \App\Entity\Restaurante) {
+                    $data['time'] = time();
+                    $dateTime = new DateTime();
+                    $dateTime->setTimestamp($data['time']);
+                    // Formatear la fecha y hora en el formato deseado
+                    $data['fecha'] = $dateTime->format('Y-m-d H:i:s');
+                    $data['enviado'] = false;
+                    // Obtén el cod_res del usuario
+                    $data['restaurante_id'] = $codRes = $user->getCod_res();
+                }
+                $pedidosRepository->anadir($data,$sesion->get("carrito"),$restauranteRepository, $entityManager, $productoRepository);
 
-        return $this->render('pedidos/new.html.twig', [
-            'pedido' => $pedido,
-            'form' => $form,
-            'cesta' => $carrito,
-            
-        ]);
+                $mail->sendEmail($mailerInterface,$sesion->get('carrito'));
+                $mail->sendEmailPedidos($mailerInterface,$sesion->get('carrito'));
+                $sesion->set("carrito",[]);
+                return $this->redirectToRoute('app_base', [], Response::HTTP_SEE_OTHER);
+            }
+            $carrito = $sesion->get('carrito');
+
+            return $this->render('pedidos/new.html.twig', [
+                'pedido' => $pedido,
+                'form' => $form,
+                'cesta' => $carrito,
+                
+            ]);
+        }else{
+            return $this->redirectToRoute("app_base");
+        }
     }
 
     #[Route('/{codPed}', name: 'app_pedidos_show', methods: ['GET'])]

@@ -48,7 +48,7 @@ class PedidosRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-public function anadir($data,$carrito, RestauranteRepository $restauranteRepository, EntityManagerInterface $entityManager) {
+public function anadir($data,$carrito, RestauranteRepository $restauranteRepository, EntityManagerInterface $entityManager, ProductoRepository $productoRepository) {
     $restauranteId = $data['restaurante_id'];
     
     $restaurante = $restauranteRepository->find($restauranteId);
@@ -66,6 +66,7 @@ public function anadir($data,$carrito, RestauranteRepository $restauranteReposit
     foreach ($carrito as $value) {
         $pedidosProductoRepository = $entityManager->getRepository(PedidosProducto::class);
         $pedidosProductoRepository->anadir($value['id'],$pedido->getCodPed(),$value['cantidad'],$entityManager);
+        $productoRepository->restar($value['id'],$value['cantidad'],$entityManager);
     }
 }
 }
