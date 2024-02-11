@@ -15,6 +15,7 @@
                         <p>{{ producto.descripcion }}</p>
                         <p>{{ producto.foto }}</p>
                         <p>{{ producto.precio }}</p>
+                        <p><a href="{{ path('app_cesta_new', {'codProd': producto.codProd}) }}">Añadir a la cesta</a></p>
                         <p><a href="{{ path('app_producto_detalle', {'codProd': producto.codProd}) }}">Ver</a></p>
                     </article>
                 {% endif %}
