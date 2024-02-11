@@ -46,10 +46,7 @@ class CestaController extends AbstractController
         }
 
         $session->set('carrito', $carrito);
-
-        return $this->render('cesta/index.html.twig', [
-            'cesta' => $carrito,
-        ]);
+        return  $this->redirectToRoute("app_cesta");
     }
 
     #[Route('/restar/{codProd}', name: 'app_cesta_menos', methods: ['GET'])]
@@ -69,9 +66,7 @@ class CestaController extends AbstractController
 
         $session->set('carrito', $carrito);
 
-        return $this->render('cesta/index.html.twig', [
-            'cesta' => $carrito,
-        ]);
+        return  $this->redirectToRoute("app_cesta");
     }
 
     #[Route('/delete/{codProd}', name: 'app_cesta_delete', methods: ['GET'])]
@@ -86,8 +81,6 @@ class CestaController extends AbstractController
 
         $session->set('carrito', $carrito);
 
-        return $this->render('cesta/index.html.twig', [
-            'cesta' => $carrito,
-        ]);
+        return  $this->redirectToRoute("app_cesta");
     }
 }
