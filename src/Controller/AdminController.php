@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Entity\Categoria;
 use App\Entity\Pedidos;
 use App\Entity\Producto;
+use App\Entity\Restaurante;
+use App\Form\Admin_editFormType;
+use App\Form\Admin_RegistrationFormType;
 use App\Form\CategoriaType;
 use App\Form\EditaPeiddosType;
 use App\Form\PedidosType;
@@ -12,16 +15,27 @@ use App\Form\ProductoType;
 use App\Repository\CategoriaRepository;
 use App\Repository\PedidosRepository;
 use App\Repository\ProductoRepository;
+use App\Repository\RestauranteRepository;
+use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/admin')]
 class AdminController extends AbstractController
 {
+    private EmailVerifier $emailVerifier;
+
+    public function __construct(EmailVerifier $emailVerifier)
+    {
+        $this->emailVerifier = $emailVerifier;
+    }
     #[Route('/', name: 'app_admin')]
     public function index(): Response
     {
@@ -303,4 +317,77 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('app_producto_index', [], Response::HTTP_SEE_OTHER);
     }
     
+
+
+    /** CREAR USERS */
+    #[Route('/users', name: 'app_restaurante_index_admin', methods: ['GET', 'POST'])]
+    public function newUser(Request $request,UserPasswordHasherInterface $userPasswordHasher , EntityManagerInterface $entityManager, RestauranteRepository $restauranteRepository): Response
+    {
+        $restaurante = new Restaurante();
+        $user = new Restaurante();
+        $form = $this->createForm(Admin_RegistrationFormType::class, $restaurante);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+            $user->setEmail($form->get('email')->getData());
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            // generate a signed url and email it to the user
+            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                (new TemplatedEmail())
+                    ->from(new Address('zoologicoiesfa@gmail.com', 'Departamento de Administracion'))
+                    ->to($user->getEmail())
+                    ->subject('Please Confirm your Email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
+            // do anything else you need here, like send an email
+
+            return $this->redirectToRoute('app_restaurante_index_admin');
+        }
+
+        return $this->render('admin/usuarios.html.twig', [
+            'restaurantes' => $restauranteRepository->findAll(),
+            'restaurante' => $restaurante,
+            'form' => $form,
+            'editar' =>false,
+        ]);
+    }
+    #[Route('/user/{cod_res}/edit', name: 'app_restaurante_edit', methods: ['GET', 'POST'])]
+    public function useredit(Request $request, Restaurante $restaurante, EntityManagerInterface $entityManager, RestauranteRepository $restauranteRepository): Response
+    {
+        $form = $this->createForm(Admin_editFormType::class, $restaurante);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_restaurante_index_admin', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('admin/usuarios.html.twig', [
+            'restaurantes' => $restauranteRepository->findAll(),
+            'restaurante' => $restaurante,
+            'form' => $form,
+            'editar' =>true,
+        ]);
+    }
+
+    #[Route('/user/{cod_res}', name: 'app_restaurante_delete', methods: ['POST'])]
+    public function userdelete(Request $request, Restaurante $restaurante, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$restaurante->getCod_res(), $request->request->get('_token'))) {
+            $entityManager->remove($restaurante);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_restaurante_index_admin', [], Response::HTTP_SEE_OTHER);
+    }
 }

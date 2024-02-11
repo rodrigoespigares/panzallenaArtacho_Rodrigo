@@ -36,6 +36,10 @@ class Restaurante implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->cod_res;
     }
+    public function getCodRes(): ?int
+    {
+        return $this->cod_res;
+    }
 
     public function getEmail(): ?string
     {

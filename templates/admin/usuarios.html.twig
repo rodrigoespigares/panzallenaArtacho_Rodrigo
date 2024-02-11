@@ -1,0 +1,49 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Productos{% endblock %}
+
+{% block body %}
+    <div>
+        <h1>Usuarios</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Cod_res</th>
+                    <th>Email</th>
+                    <th>Roles</th>
+                    <th>Password</th>
+                    <th>IsVerified</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for restaurante in restaurantes %}
+                <tr>
+                    <td>{{ restaurante.codRes }}</td>
+                    <td>{{ restaurante.email }}</td>
+                    <td>{{ restaurante.roles ? restaurante.roles|json_encode : '' }}</td>
+                    <td>{{ restaurante.password }}</td>
+                    <td>{{ restaurante.isVerified ? 'Yes' : 'No' }}</td>
+                    <td>
+                        <a href="{{ path('app_restaurante_edit', {'cod_res': restaurante.cod_res}) }}">Editar</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        {% if editar %}
+            {{ include('producto/_form.html.twig', {'button_label': 'Editar'}) }}
+        {% else %}
+            {{ include('producto/_form.html.twig') }}
+        {% endif %}
+        <a href="{{ path('app_restaurante_index_admin') }}">Cancelar</a>
+    </div>
+{% endblock %}
