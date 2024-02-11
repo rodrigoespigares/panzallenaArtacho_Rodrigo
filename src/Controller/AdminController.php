@@ -262,7 +262,7 @@ class AdminController extends AbstractController
         ]);
     }
     #[Route('/producto/{codProd}/edit', name: 'app_producto_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Producto $producto, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Producto $producto, EntityManagerInterface $entityManager, ProductoRepository $productoRepository): Response
     {
         $form = $this->createForm(ProductoType::class, $producto);
         $form->handleRequest($request);
@@ -296,12 +296,14 @@ class AdminController extends AbstractController
             $entityManager->flush();
 
             // Redirigir al usuario a la página de índice de productos después de editar el producto
-            return $this->redirectToRoute('app_producto_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_producto_index_admin', [], Response::HTTP_SEE_OTHER);
         }
 
         // Renderizar el formulario para editar el producto
-        return $this->render('producto/edit.html.twig', [
+        return $this->render('admin/producto.html.twig', [
             'producto' => $producto,
+            'editar'=>true,
+            'productos' => $productoRepository->findAll(),
             'form' => $form->createView(),
         ]);
     }
