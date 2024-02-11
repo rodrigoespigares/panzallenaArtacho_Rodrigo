@@ -29,10 +29,14 @@
                 <td>{{ producto.stock }}</td>
                 <td>{{ producto.foto }}</td>
                 <td>{{ producto.precio }}</td>
-                <td>
-                    <a href="{{ path('app_producto_show', {'codProd': producto.codProd}) }}">Ver</a>
+                <td class="d-flex gap-3">
+                    <button class="btn btn-success boto">
+                        <a href="{{ path('app_producto_show', {'codProd': producto.codProd}) }}">Ver</a>
+                    </button>
                     {% if app.user.roles[0]=="ROLE_ADMIN" %}
-                    <a href="{{ path('app_producto_edit', {'codProd': producto.codProd}) }}">Editar</a>
+                    <button class="btn btn-success boto">
+                        <a href="{{ path('app_producto_edit', {'codProd': producto.codProd}) }}">Editar</a>
+                    </button>
                     {% endif %}
                 </td>
             </tr>
@@ -45,18 +49,18 @@
     </table>
     </div>
 
-    <div>
+    <div class="formulario__admin__productos">
         {% if editar %}
-            {{ include('producto/_form.html.twig', {'button_label': 'Editar'}) }}
-
-            <a href="{{ path('app_producto_index_admin') }}">back to list</a>
-
+            {{ include('producto/_form.html.twig', {'button_label': 'Confirmar'}) }}
+            <button class="btn btn-success boto">
+                <a href="{{ path('app_producto_index_admin') }}">back to list</a>
+            </button>
             {{ include('producto/_delete_form.html.twig') }}
         {% else %}
             {{ include('producto/_form.html.twig') }}
-
-            <a href="{{ path('app_producto_index_admin') }}">back to list</a>
+            <button class="btn btn-success boto">
+                <a href="{{ path('app_producto_index_admin') }}">back to list</a>
+            </button>
         {% endif %}
-        
     </div>
 {% endblock %}

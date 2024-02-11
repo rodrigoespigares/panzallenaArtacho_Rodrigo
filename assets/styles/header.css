@@ -32,3 +32,6 @@ header .boton{
 .header__menu a:hover{
     color: var(--tertiary);
 }
+.header__menu>a{
+    color: white;
+}

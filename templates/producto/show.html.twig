@@ -5,40 +5,21 @@
 {% block body %}
     <h1>Producto</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>CodProd</th>
-                <td>{{ producto.codProd }}</td>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ producto.nombre }}</td>
-            </tr>
-            <tr>
-                <th>Descripcion</th>
-                <td>{{ producto.descripcion }}</td>
-            </tr>
-            <tr>
-                <th>Peso</th>
-                <td>{{ producto.peso }}</td>
-            </tr>
-            <tr>
-                <th>Stock</th>
-                <td>{{ producto.stock }}</td>
-            </tr>
-            <tr>
-                <th>Foto</th>
-                <td>{{ producto.foto }}</td>
-            </tr>
-            <tr>
-                <th>Precio</th>
-                <td>{{ producto.precio }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <article class="d-flex gap-5">
+        <div class="contenedor__imagen"><img class="w-100 h-100" src="{{ asset('uploads/' ~ producto.foto) }}"></div>
+        <div class="">
+            <p>CodProd: {{ producto.codProd }}</p>
+            <p>Nombre: {{ producto.nombre }}</p>
+            <p>Descripcion: {{ producto.descripcion }}</p>
+            <p>Peso: {{ producto.peso }}</p>
+            <p>Stock: {{ producto.stock }}</p>
+            <p>Precio: {{ producto.precio }}</p>
+        </div>
+    </article>
 
-    <a href="{{ path('app_producto_index') }}">Volver</a>
+    <button class="btn btn-success boto">
+        <a href="{{ path('app_base') }}">Volver</a>
+    </button>
     {% if app.user.roles[0]=="admin" %}
     <a href="{{ path('app_producto_edit', {'codProd': producto.codProd}) }}">edit</a>
     {{ include('producto/_delete_form.html.twig') }}

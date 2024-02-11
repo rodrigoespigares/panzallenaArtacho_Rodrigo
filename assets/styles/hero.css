@@ -1,0 +1,10 @@
+.btn>a{
+    color: white;
+}
+.boto:hover{
+    transition: 1s;
+    transform: scale(1.2);
+}
+.card{
+    height: 30rem;
+}

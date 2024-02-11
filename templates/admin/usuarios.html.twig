@@ -24,7 +24,9 @@
                     <td>{{ restaurante.roles ? restaurante.roles|json_encode : '' }}</td>
                     <td>{{ restaurante.isVerified ? 'Yes' : 'No' }}</td>
                     <td>
-                        <a href="{{ path('app_restaurante_edit', {'cod_res': restaurante.cod_res}) }}">Editar</a>
+                        <button class="btn btn-success boto">
+                            <a href="{{ path('app_restaurante_edit', {'cod_res': restaurante.cod_res}) }}">Editar</a>
+                        </button>
                     </td>
                 </tr>
             {% else %}
@@ -36,12 +38,14 @@
         </table>
     </div>
 
-    <div>
+    <div class="formulario__admin__usuarios">
         {% if editar %}
             {{ include('producto/_form.html.twig', {'button_label': 'Editar'}) }}
         {% else %}
             {{ include('producto/_form.html.twig') }}
         {% endif %}
-        <a href="{{ path('app_restaurante_index_admin') }}">Cancelar</a>
+        <button class="btn btn-success boto">
+            <a href="{{ path('app_restaurante_index_admin') }}">Cancelar</a>
+        </button>
     </div>
 {% endblock %}

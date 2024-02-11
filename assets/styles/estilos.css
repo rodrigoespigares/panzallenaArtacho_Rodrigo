@@ -1,0 +1,138 @@
+.contenedor__imagen{
+    height: 30rem;
+    width: 35%;
+}
+.formulario__admin__pedidos{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.formulario__admin__pedidos>form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+.formulario__admin__pedidos>form>button{
+    background-color: var(--secondary);
+    color: white;
+}
+.formulario__admin__pedidos>form>button:hover{
+    background-color: var(--secondary);
+    color: white;
+    transition: 1s ease;
+    transform: scale(1.2);
+}
+.formulario__admin__pedidos>form>div>div{
+    display: flex;
+    gap: 2rem;
+}
+.formulario__admin__pedidos>form>p{
+    background-color: red;
+}
+.formulario__admin__productos{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.formulario__admin__productos>form>button{
+    background-color: var(--secondary);
+    color: white;
+}
+.formulario__admin__productos>form>button:hover{
+    background-color: var(--secondary);
+    color: white;
+    transition: 1s ease;
+    transform: scale(1.2);
+}
+.formulario__admin__productos>form{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.formulario__admin__productos>form>div>div>label{
+    width: 50%;
+}
+.formulario__admin__productos>form>div>div>input{
+    width: 50%;
+}
+.formulario__admin__categorias{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.formulario__admin__categorias>form>button{
+    background-color: var(--secondary);
+    color: white;
+}
+.formulario__admin__categorias>form>button:hover{
+    background-color: var(--secondary);
+    color: white;
+    transition: 1s ease;
+    transform: scale(1.2);
+}
+.formulario__admin__categorias>form{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.formulario__admin__categorias>form>div>div>label{
+    width: 50%;
+}
+.formulario__admin__categorias>form>div>div>input{
+    width: 50%;
+}
+
+
+.formulario__admin__usuarios{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.formulario__admin__usuarios>form{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.formulario__admin__usuarios>form>button{
+    background-color: var(--secondary);
+    color: white;
+}
+.formulario__admin__usuarios>form>button:hover{
+    background-color: var(--secondary);
+    color: white;
+    transition: 1s ease;
+    transform: scale(1.2);
+}
+.formulario__admin__usuarios>form>div>div>label{
+    width: 50%;
+}
+.formulario__admin__usuarios>form>div>div>input{
+    width: 50%;
+}
+.formulario__admin__usuarios>form>div>div>div{
+    display: flex;
+    justify-content: space-between;
+}
+.div__botones{
+    display: flex;
+    gap: 5rem;
+}
+.boton__delete>form>button{
+    background-color: var(--secondary);
+    color: white;
+}
+.boton__delete>form>button:hover{
+    background-color: var(--secondary);
+    color: white;
+    transition: 1s ease;
+    transform: scale(1.2);
+}
+.contenedor__new__pedidos{
+    display: flex;
+    flex-direction: column;
+}
+
+new__pedido{
+    display: flex;
+}

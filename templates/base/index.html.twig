@@ -3,23 +3,41 @@
 {% block title %}Hello BaseController!
 {% endblock %}
 
-{% block body %}
-	{% for categorium in categorias %}
-		<h3>{{ categorium.nombre }}</h3>
 
-		<section class="d-flex">
+{% block body %}
+
+    <div class="d-flex flex-column gap-5">
+	{% for categorium in categorias %}
+
+		<section class="d-flex flex-column flex-wrap">
+            <h3>{{ categorium.nombre }}</h3>
+            <article class="d-flex gap-5">
             {% for producto in productos %}
-                {% if categorium.codCat == producto.categoria.codCat %}
-                    <article>
-                        <p>{{ producto.nombre }}</p>
-                        <p>{{ producto.descripcion }}</p>
-                        <p><img src="{{ asset('uploads/' ~ producto.foto) }}"></p>
-                        <p>{{ producto.precio }}</p>
-                        <p><a href="{{ path('app_cesta_new', {'codProd': producto.codProd}) }}">Añadir a la cesta</a></p>
-                        <p><a href="{{ path('app_producto_detalle', {'codProd': producto.codProd}) }}">Ver</a></p>
-                    </article>
+                {% if categorium.codCat == producto.categoria.codCat and producto.stock != 0 %}
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{ asset('uploads/' ~ producto.foto) }}" class="card-img-top h-50" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ producto.nombre }}</h5>
+                            <p class="card-text">{{ producto.descripcion }}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">{{ producto.precio }}€</li>
+
+                        </ul>
+                        <div class="card-body d-flex gap-4">
+                            <button class="btn btn-success boto">
+                                <a href="{{ path('app_cesta_new', {'codProd': producto.codProd}) }}" class="card-link">Añadir a la cesta</a>
+                            </button>
+                            <button class="btn btn-success boto">
+                                <a  href="{{ path('app_producto_detalle', {'codProd': producto.codProd}) }}" class="card-link">Ver</a>
+                            </button>
+
+                        </div>
+                    </div>
                 {% endif %}
             {% endfor %}
+            </article>
         </section>
 	{% endfor %}
+    </div>
 {% endblock %}

@@ -1,0 +1,8 @@
+a>svg{
+    height: 2rem;
+    width: 2rem;
+}
+a>svg:hover{
+    transition: 1s ease;
+    transform: scale(1.2);
+}

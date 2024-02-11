@@ -21,7 +21,9 @@
                 <td>{{ pedido.fecha ? pedido.fecha|date('Y-m-d') : '' }}</td>
                 <td>{{ pedido.enviado ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('app_pedidos_show', {'codPed': pedido.codPed}) }}">Ver</a>
+                    <button class="btn btn-success boto">
+                        <a href="{{ path('app_pedidos_show', {'codPed': pedido.codPed}) }}">Ver</a>
+                    </button>
                 </td>
             </tr>
         {% else %}
