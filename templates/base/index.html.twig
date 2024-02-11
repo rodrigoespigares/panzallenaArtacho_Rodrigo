@@ -13,7 +13,7 @@
                     <article>
                         <p>{{ producto.nombre }}</p>
                         <p>{{ producto.descripcion }}</p>
-                        <p><img src="../../public/uploads/{{ producto.foto }}">{{ producto.foto }}</p>
+                        <p><img src="{{ asset('uploads/' ~ producto.foto) }}"></p>
                         <p>{{ producto.precio }}</p>
                         <p><a href="{{ path('app_cesta_new', {'codProd': producto.codProd}) }}">Añadir a la cesta</a></p>
                         <p><a href="{{ path('app_producto_detalle', {'codProd': producto.codProd}) }}">Ver</a></p>
