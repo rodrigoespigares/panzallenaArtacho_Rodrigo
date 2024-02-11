@@ -4,7 +4,9 @@ namespace App\Repository;
 
 use App\Entity\Pedidos;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\PedidosProducto;
 
 /**
  * @extends ServiceEntityRepository<Pedidos>
@@ -16,7 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PedidosRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, )
     {
         parent::__construct($registry, Pedidos::class);
     }
@@ -45,4 +47,25 @@ class PedidosRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function anadir($data,$carrito, RestauranteRepository $restauranteRepository, EntityManagerInterface $entityManager) {
+    $restauranteId = $data['restaurante_id'];
+    
+    $restaurante = $restauranteRepository->find($restauranteId);
+
+    // Crear una nueva instancia de la entidad Pedidos
+    $pedido = new Pedidos();
+    $pedido->setRestaurante($restaurante);
+    $fecha = new \DateTime($data['fecha']);
+    $pedido->setFecha($fecha);
+    $pedido->setEnviado(false);
+
+    // Persistir el pedido en la base de datos
+    $entityManager->persist($pedido);
+    $entityManager->flush();
+    foreach ($carrito as $value) {
+        $pedidosProductoRepository = $entityManager->getRepository(PedidosProducto::class);
+        $pedidosProductoRepository->anadir($value['id'],$pedido->getCodPed(),$value['cantidad'],$entityManager);
+    }
+}
 }

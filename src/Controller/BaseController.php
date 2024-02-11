@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Categoria;
+use App\Entity\Producto;
+use App\Entity\Pedidos;
+
 use App\Repository\CategoriaRepository;
 use App\Repository\ProductoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,6 +21,13 @@ class BaseController extends AbstractController
         $prod = $productoRepository->extract();
         return $this->render('base/index.html.twig', [
             'categorias' => $cat,'productos' => $prod
+        ]);
+    }
+    #[Route('/detalle/producto/{codProd}', name: 'app_producto_detalle', methods: ['GET'])]
+    public function show(Producto $producto): Response
+    {
+        return $this->render('producto/show.html.twig', [
+            'producto' => $producto,
         ]);
     }
 }

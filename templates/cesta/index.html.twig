@@ -5,7 +5,7 @@
 {% block body %}
         <h1 class="display-1">Cesta</h1>
         {% if cesta|length >0 %}
-        <table>
+        <table class="table">
             <thead>
                 <th>Nombre</th>
                 <th>Cantidad</th>
@@ -14,7 +14,6 @@
                 <th>otros</th>
             </thead>
             <tbody>
-
                 {% for producto in cesta %}
                     <tr>
                         <td>{{ producto.producto.nombre }}</td>
@@ -28,9 +27,9 @@
                         </td>
                     </tr>
                 {% endfor %}
-
             </tbody>
         </table>
+        <a href="">Hacer el pedido</a>
             {% else %}
             <p>Su carrito no tiene productos</p>
         {% endif %}

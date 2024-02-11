@@ -21,7 +21,7 @@ class Restaurante implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column]
-    private array $roles = ['restaurante'];
+    private array $roles = ['ROLE_RESTAURANTE'];
 
     /**
      * @var string The hashed password
@@ -66,7 +66,7 @@ class Restaurante implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_RESTAURANTE';
 
         return array_unique($roles);
     }

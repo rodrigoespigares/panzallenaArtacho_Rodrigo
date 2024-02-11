@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Pedidos{% endblock %}
+
+{% block body %}
+    <h1>Create new Pedidos</h1>
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Precio total</th>
+        </tr>
+    {% set total = 0 %}
+    {% for producto in cesta %}
+        
+        <tr>
+            <td>{{ producto.producto.nombre }}</td>
+            <td>{{ producto.cantidad }}</td>
+            <td>{{ producto.producto.precio }}</td>
+            <td>{{ producto.producto.precio*producto.cantidad }}</td>
+        </tr>
+        {% set total = total + (producto.producto.precio * producto.cantidad) %}
+    {% endfor %}
+    <tr>
+        <td colspan='3'>Total</td>
+        <td>{{total}}</td>
+    </tr>
+    </table>
+    
+    {{ include('pedidos/_form.html.twig') }}
+
+    <a href="{{ path('app_pedidos_index') }}">back to list</a>
+{% endblock %}

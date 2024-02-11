@@ -66,3 +66,7 @@ ul{
     margin: 0;
     padding-left: 0;
 }
+table{
+    text-align: center;
+    font-size: 1.6rem;
+}

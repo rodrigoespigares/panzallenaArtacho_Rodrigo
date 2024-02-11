@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pedidos{% endblock %}
+
+{% block body %}
+    <h1>Pedidos</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>CodPed</th>
+                <td>{{ pedido.codPed }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ pedido.fecha ? pedido.fecha|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Enviado</th>
+                <td>{{ pedido.enviado ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_pedidos_index') }}">back to list</a>
+    {% if app.user.roles[0]=="ROLE_ADMIN" %}
+        <a href="{{ path('app_pedidos_edit', {'codPed': pedido.codPed}) }}">edit</a>
+        {{ include('pedidos/_delete_form.html.twig') }}
+    {% endif %}
+    
+{% endblock %}

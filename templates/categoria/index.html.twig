@@ -11,7 +11,9 @@
                 <th>CodCat</th>
                 <th>Nombre</th>
                 <th>Descripcion</th>
+                {% if app.user.roles[0]=="ROLE_ADMIN" %}
                 <th>actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -20,10 +22,12 @@
                 <td>{{ categorium.codCat }}</td>
                 <td>{{ categorium.nombre }}</td>
                 <td>{{ categorium.descripcion }}</td>
+                {% if app.user.roles[0]=="ROLE_ADMIN" %}
                 <td>
                     <a href="{{ path('app_categoria_show', {'codCat': categorium.codCat}) }}">show</a>
                     <a href="{{ path('app_categoria_edit', {'codCat': categorium.codCat}) }}">edit</a>
                 </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
@@ -32,6 +36,7 @@
         {% endfor %}
         </tbody>
     </table>
-
+    {% if app.user.roles[0]=="ROLE_ADMIN" %}
     <a href="{{ path('app_categoria_new') }}">Create new</a>
+    {% endif %}
 {% endblock %}

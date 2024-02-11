@@ -5,89 +5,89 @@ namespace App\Controller;
 use App\Entity\Producto;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/cesta')]
 class CestaController extends AbstractController
 {
     #[Route('/', name: 'app_cesta')]
-    public function index(): Response
+    public function index(SessionInterface $session): Response
     {
-        session_start();
-        $resultado="";
-        if (isset($_SESSION['carrito'])){
-            $resultado=$_SESSION['carrito'];
-        }
+        $resultado = $session->get('carrito', []);
+
         return $this->render('cesta/index.html.twig', [
             'cesta' => $resultado
         ]);
     }
+
     #[Route('/new/{codProd}', name: 'app_cesta_new', methods: ['GET'])]
-    public function new(Producto $producto): Response
+    public function new(Producto $producto, SessionInterface $session): Response
     {
-        session_start();
+        $carrito = $session->get('carrito', []);
 
-        if (isset($_SESSION['carrito'])){
 
-            $existe=false;
-            for ($i=0;$i<count($_SESSION['carrito']);$i++){
-                $carrito=$_SESSION['carrito'][$i];
-
-                if ($carrito['id']==($producto->getCodProd())){
-                    if ($carrito['cantidad']<$producto->getStock()){
-                        $carrito['cantidad']++;
-                    }
-                    $existe=true;
+        $existe = false;
+        foreach ($carrito as &$item) {
+            if ($item['id'] == $producto->getCodProd()) {
+                if ($item['cantidad'] < $producto->getStock()) {
+                    $item['cantidad']++;
                 }
-                $_SESSION['carrito'][$i]=$carrito;
+                $existe = true;
             }
-            if (!$existe){
-                array_push($_SESSION['carrito'],["id"=>($producto->getCodProd()),"cantidad"=>1,"producto"=>$producto]);
-            }
-        }else{
-            $_SESSION['carrito']=[["id"=>($producto->getCodProd()),"cantidad"=>1,"producto"=>$producto]];
         }
 
+        if (!$existe) {
+            $carrito[] = [
+                'id' => $producto->getCodProd(),
+                'cantidad' => 1,
+                'producto' => $producto,
+            ];
+        }
+
+        $session->set('carrito', $carrito);
+
         return $this->render('cesta/index.html.twig', [
-            'cesta' => $_SESSION['carrito'],
+            'cesta' => $carrito,
         ]);
     }
+
     #[Route('/restar/{codProd}', name: 'app_cesta_menos', methods: ['GET'])]
-    public function menos(Producto $producto): Response
+    public function menos(Producto $producto, SessionInterface $session): Response
     {
-        session_start();
-        if (isset($_SESSION['carrito'])){
-            for ($i=0;$i<count($_SESSION['carrito']);$i++){
-                $carrito=$_SESSION['carrito'][$i];
-                if ($carrito['id']==($producto->getCodProd())){
-                    if ($carrito['cantidad']==1){
-                        unset($_SESSION['carrito'][$i]);
+        $carrito = $session->get('carrito', []);
 
-                    }else{
-                        $carrito['cantidad']--;
-                        $_SESSION['carrito'][$i]=$carrito;
-                    }
+        foreach ($carrito as $key => &$item) {
+            if ($item['id'] == $producto->getCodProd()) {
+                if ($item['cantidad'] == 1) {
+                    unset($carrito[$key]);
+                } else {
+                    $item['cantidad']--;
                 }
             }
         }
+
+        $session->set('carrito', $carrito);
+
         return $this->render('cesta/index.html.twig', [
-            'cesta' => $_SESSION['carrito'],
+            'cesta' => $carrito,
         ]);
     }
+
     #[Route('/delete/{codProd}', name: 'app_cesta_delete', methods: ['GET'])]
-    public function delete(Producto $producto): Response
+    public function delete(Producto $producto, SessionInterface $session): Response
     {
-        session_start();
-        if (isset($_SESSION['carrito'])){
-            for ($i=0;$i<count($_SESSION['carrito']);$i++){
-                $carrito=$_SESSION['carrito'][$i];
-                if ($carrito['id']==($producto->getCodProd())){
-                    unset($_SESSION['carrito'][$i]);
-                }
+        $carrito = $session->get('carrito', []);
+        foreach ($carrito as $key => $item) {
+            if ($item['id'] == $producto->getCodProd()) {
+                unset($carrito[$key]);
             }
         }
+
+        $session->set('carrito', $carrito);
+
         return $this->render('cesta/index.html.twig', [
-            'cesta' => $_SESSION['carrito'],
+            'cesta' => $carrito,
         ]);
     }
 }

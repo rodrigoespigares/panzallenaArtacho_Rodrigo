@@ -3,7 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\PedidosProducto;
+use App\Entity\Producto;
+use App\Entity\Pedidos;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -45,4 +48,20 @@ class PedidosProductoRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function anadir($p_id, $ped_id, $cant, EntityManagerInterface $entityManager) {
+    // Suponiendo que tienes un repositorio de productos, puedes obtener el producto por su ID
+    $ped_prod = new PedidosProducto();
+
+    $producto = $entityManager->getRepository(Producto::class)->find($p_id);
+    $pedido = $entityManager->getRepository(Pedidos::class)->find($ped_id);
+
+    if ($producto && $pedido) {
+        $ped_prod->setProducto($producto);
+        $ped_prod->setPedido($pedido);
+        $ped_prod->setUnidades($cant);
+
+        $entityManager->persist($ped_prod);
+        $entityManager->flush();
+    }
+}
 }

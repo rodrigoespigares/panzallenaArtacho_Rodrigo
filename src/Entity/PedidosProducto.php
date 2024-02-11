@@ -9,7 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 class PedidosProducto
 {
     #[ORM\Id]
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(type: "integer")]
     private ?int $codPedProd = null;
 
     #[ORM\Column]
