@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BaseController!
+{% block title %}Inicio
 {% endblock %}
 
 
@@ -10,7 +10,7 @@
 	{% for categorium in categorias %}
 
 		<section class="d-flex flex-column flex-wrap">
-            <h3>{{ categorium.nombre }}</h3>
+            <h3 class="">{{ categorium.nombre }}</h3>
             <article class="d-flex align-items-center gap-5">
             {% for producto in productos %}
                 {% if categorium.codCat == producto.categoria.codCat and producto.stock != 0 %}
