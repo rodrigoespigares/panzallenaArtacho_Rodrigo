@@ -18,7 +18,7 @@
 /* Declaracion de variables*/
 :root{
     /* Color proncipal */
-    --primary: rgb(105, 105, 105);
+    --primary: rgb(48, 48, 48);
     --primaryCeroOcho: rgba(105, 105, 105,0.8);
     --primaryCeroSeis: rgba(105, 105, 105,0.6);
     /* Letra para enlaces */
