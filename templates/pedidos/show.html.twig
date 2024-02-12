@@ -21,11 +21,24 @@
             </tr>
         </tbody>
     </table>
+    <div>
+        {% set total = 0 %}
+        {% for producto in productos %}
+            <div class="contenedor__new__pedidos">
+                <div class="d-flex justify-content-between"><p>Nombre: </p><p>{{ producto.producto.getNombre() }}</p></div>
+                <div class="d-flex justify-content-between"><p>Cantidad: </p><p>{{ producto.cantidad }}</p></div>
+                <div class="d-flex justify-content-between"><p>Precio: </p><p>{{ producto.producto.getPrecio() }}€</p></div>
+                <div class="d-flex justify-content-between"><p>Total por unidad: </p><p>{{ producto.producto.getPrecio()*producto.cantidad }}€</p></div>
+                <hr>
+            </div>
+            {% set total = total + (producto.producto.getPrecio() * producto.cantidad) %}
+        {% endfor %}
+        <div class="d-flex justify-content-between"><p>Total pedido: </p><p>{{total}}€</p></div>
+    </div>
     <div class="div__botones">
         <button class="btn btn-success boto">
             <a href="{{ path('app_base') }}">back to list</a>
         </button>
-        
     </div>
 
 

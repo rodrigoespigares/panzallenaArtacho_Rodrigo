@@ -7,17 +7,13 @@
                     {{ app.user.email }}</p>
 				</button>
 				<ul class="dropdown-menu">
-                    <li>
-						<a class="dropdown-item" href="/logout">Cerrar sesión</a>
-					</li>
+
                     
                     {% if app.user.roles[0]!="ROLE_RESTAURANTE" %}
 					<li>
 						<a class="dropdown-item" href="/admin/pedidos">Pedidos</a>
 					</li>
-					<li>
-						<a href="/admin" class="dropdown-item"></a>
-					</li>
+
 						{% if app.user.roles[0]=="ROLE_ADMIN" %}
 							<li>
 								<a class="dropdown-item" href="/admin/producto">Productos</a>
@@ -30,6 +26,9 @@
 							</li>
 						{% endif %}
                     {% endif %}
+					<li>
+						<a class="dropdown-item" href="/logout">Cerrar sesión</a>
+					</li>
 				</ul>
 			</div>
 		{% endif %}

@@ -48,20 +48,30 @@ class PedidosProductoRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-public function anadir($p_id, $ped_id, $cant, EntityManagerInterface $entityManager) {
-    // Suponiendo que tienes un repositorio de productos, puedes obtener el producto por su ID
-    $ped_prod = new PedidosProducto();
+    public function anadir($p_id, $ped_id, $cant, EntityManagerInterface $entityManager) {
+        // Suponiendo que tienes un repositorio de productos, puedes obtener el producto por su ID
+        $ped_prod = new PedidosProducto();
 
-    $producto = $entityManager->getRepository(Producto::class)->find($p_id);
-    $pedido = $entityManager->getRepository(Pedidos::class)->find($ped_id);
+        $producto = $entityManager->getRepository(Producto::class)->find($p_id);
+        $pedido = $entityManager->getRepository(Pedidos::class)->find($ped_id);
 
-    if ($producto && $pedido) {
-        $ped_prod->setProducto($producto);
-        $ped_prod->setPedido($pedido);
-        $ped_prod->setUnidades($cant);
+        if ($producto && $pedido) {
+            $ped_prod->setProducto($producto);
+            $ped_prod->setPedido($pedido);
+            $ped_prod->setUnidades($cant);
 
-        $entityManager->persist($ped_prod);
-        $entityManager->flush();
+            $entityManager->persist($ped_prod);
+            $entityManager->flush();
+        }
     }
-}
+
+    public function todoProduct(EntityManagerInterface $entityManager, $p_id){
+        $productosAsociados=$entityManager->getRepository(PedidosProducto::class)->findBy(['pedido'=>$p_id]);
+        $productos=[];
+        foreach ($productosAsociados as $productoAsociado){
+            $IDproductos = $productoAsociado->getProducto();
+            $productos[]=["producto"=>$entityManager->getRepository(Producto::class)->find($IDproductos),"cantidad"=>$productoAsociado->getUnidades()];
+        }
+        return $productos;
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Pedidos;
 use App\Entity\Restaurante;
 use App\Form\PedidosType;
+use App\Repository\PedidosProductoRepository;
 use App\Repository\PedidosRepository;
 use App\Repository\ProductoRepository;
 use App\Repository\RestauranteRepository;
@@ -76,10 +77,12 @@ class PedidosController extends AbstractController
     }
 
     #[Route('/{codPed}', name: 'app_pedidos_show', methods: ['GET'])]
-    public function show(Pedidos $pedido): Response
+    public function show(Pedidos $pedido,EntityManagerInterface $entityManager, PedidosProductoRepository $repositoryPedidosProductos): Response
     {
+        $productos=$repositoryPedidosProductos->todoProduct($entityManager,$pedido->getCodPed());
         return $this->render('pedidos/show.html.twig', [
             'pedido' => $pedido,
+            'productos'=>$productos
         ]);
     }
 
