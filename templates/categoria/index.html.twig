@@ -31,12 +31,12 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">No hay resultados</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
     {% if app.user.roles[0]=="ROLE_ADMIN" %}
-    <a href="{{ path('app_categoria_new') }}">Create new</a>
+    <a href="{{ path('app_categoria_new') }}">Crear uno nuevo</a>
     {% endif %}
 {% endblock %}

@@ -36,7 +36,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="4">no records found</td>
+                    <td colspan="4">No hay resultados</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -48,13 +48,13 @@
 
             {{ include('categoria/_form.html.twig', {'button_label': 'Confirmar'}) }}
             <button class="btn btn-success boto">
-                <a href="{{ path('app_categoria_index_admin') }}">back to list</a>
+                <a href="{{ path('app_categoria_index_admin') }}">Volver</a>
             </button>
             {{ include('categoria/_delete_form.html.twig') }}
         {% else %}
             {{ include('categoria/_form.html.twig') }}
             <button class="btn btn-success boto">
-                <a href="{{ path('app_categoria_index_admin') }}">back to list</a>
+                <a href="{{ path('app_categoria_index_admin') }}">Volver</a>
             </button>
         {% endif %}
         

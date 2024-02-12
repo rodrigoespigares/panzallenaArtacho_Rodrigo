@@ -32,7 +32,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">No hay resultados</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -43,7 +43,7 @@
         
             {{ include('pedidos/_form.html.twig',{'button_label': 'Confirmar'}) }}
             <button class="btn btn-success boto">
-                <a href="{{ path('app_pedidos_index_admin') }}">back to list</a>
+                <a href="{{ path('app_pedidos_index_admin') }}">Volver</a>
             </button>
         
     </div>

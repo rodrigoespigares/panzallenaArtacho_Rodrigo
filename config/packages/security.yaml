@@ -34,6 +34,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        
+        - { path: ^/admin/pedidos, roles: 'ROLE_ADMIN, ROLE_PEDIDOS' }
         - { path: ^/admin/, roles: 'ROLE_ADMIN' }
         - { path: ^/register, roles: 'ROLE_ADMIN' }
         - { path: ^/index, roles: 'ROLE_RESTAURANTE' }
