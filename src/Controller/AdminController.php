@@ -373,10 +373,12 @@ class AdminController extends AbstractController
 
             return $this->redirectToRoute('app_restaurante_index_admin', [], Response::HTTP_SEE_OTHER);
         }
-
+        
+        $emailUser = $restaurante->getEmail();
         return $this->render('admin/usuarios.html.twig', [
             'restaurantes' => $restauranteRepository->findAll(),
             'restaurante' => $restaurante,
+            'email' => $emailUser,
             'form' => $form,
             'editar' =>true,
         ]);

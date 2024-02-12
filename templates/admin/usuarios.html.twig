@@ -40,6 +40,7 @@
 
     <div class="formulario__admin__usuarios">
         {% if editar %}
+            <p>Usuario a editar: {{email}}</p>
             {{ include('producto/_form.html.twig', {'button_label': 'Confirmar'}) }}
         {% else %}
             {{ include('producto/_form.html.twig') }}

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Categoria;
 use App\Form\CategoriaType;
 use App\Repository\CategoriaRepository;
+use App\Repository\ProductoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +20,14 @@ class CategoriaController extends AbstractController
     {
         return $this->render('categoria/index.html.twig', [
             'categorias' => $categoriaRepository->findAll(),
+        ]);
+    }
+    #[Route('/categoria/{codCat}', name: 'app_categoria_show_user', methods: ['GET'])]
+    public function show(Categoria $categorium, ProductoRepository $productoRepository): Response
+    {
+        return $this->render('categoria/show.html.twig', [
+            'categorium' => $categorium,
+            'productos' => $productoRepository->findAll()
         ]);
     }
 

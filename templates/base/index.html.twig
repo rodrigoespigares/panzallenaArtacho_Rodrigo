@@ -11,7 +11,7 @@
 
 		<section class="d-flex flex-column flex-wrap">
             <h3>{{ categorium.nombre }}</h3>
-            <article class="d-flex gap-5">
+            <article class="d-flex align-items-center gap-5">
             {% for producto in productos %}
                 {% if categorium.codCat == producto.categoria.codCat and producto.stock != 0 %}
                     <div class="card" style="width: 18rem;">
@@ -36,6 +36,9 @@
                     </div>
                 {% endif %}
             {% endfor %}
+            <button class="btn btn-success">
+                <a href="{{ path('app_categoria_show_user', {'codCat': categorium.codCat}) }}">Ver más</a>
+            </button>
             </article>
         </section>
 	{% endfor %}
