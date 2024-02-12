@@ -13,7 +13,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class Producto
 {
     #[ORM\Id]
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(type: "integer")]
     private ?int $codProd = null;
 
     #[ORM\Column(length: 45)]

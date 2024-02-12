@@ -22,13 +22,6 @@ class ProductoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('codProd', IntegerType::class, [
-            'constraints' => [
-                new Positive([
-                    'message' => 'El valor de codProd debe ser un número positivo.',
-                ]),
-            ],
-        ])
         ->add('nombre', TextType::class, [
             'constraints' => [
                 new NotBlank([

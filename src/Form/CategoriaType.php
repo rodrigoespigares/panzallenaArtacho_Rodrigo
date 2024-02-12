@@ -18,13 +18,6 @@ class CategoriaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('codCat', IntegerType::class, [
-            'constraints' => [
-                new Positive([
-                    'message' => 'El valor de codCat debe ser un número positivo.',
-                ]),
-            ],
-        ])
         ->add('nombre', TextType::class, [
             'constraints' => [
                 new NotBlank([

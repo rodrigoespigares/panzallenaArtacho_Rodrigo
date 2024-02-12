@@ -9,7 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Categoria
 {
     #[ORM\Id]
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(type: "integer")]
     private ?int $codCat = null;
 
     #[ORM\Column(length: 45)]
