@@ -22,7 +22,7 @@ class CategoriaController extends AbstractController
             'categorias' => $categoriaRepository->findAll(),
         ]);
     }
-    #[Route('/categoria/{codCat}', name: 'app_categoria_show_user', methods: ['GET'])]
+    #[Route('/{codCat}', name: 'app_categoria_show_user', methods: ['GET'])]
     public function show(Categoria $categorium, ProductoRepository $productoRepository): Response
     {
         return $this->render('categoria/show.html.twig', [
