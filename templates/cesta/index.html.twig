@@ -1,39 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Cesta{% endblock %}
+{% block title %}Cesta
+{% endblock %}
 
 {% block body %}
-        <h1 class="display-1">Cesta</h1>
-        {% if cesta|length >0 %}
-        <table class="table">
-            <thead>
-                <th>Nombre</th>
-                <th>Cantidad</th>
-                <th>Precio Unidad</th>
-                <th>Precio Total productos</th>
-                <th>otros</th>
-            </thead>
-            <tbody>
-                {% for producto in cesta %}
-                    <tr>
-                        <td>{{ producto.producto.nombre }}</td>
-                        <td>{{ producto.cantidad }}</td>
-                        <td>{{ producto.producto.precio }}</td>
-                        <td>{{ producto.producto.precio*producto.cantidad }}</td>
-                        <td class="d-flex gap-3">
-                            <a href="{{ path('app_cesta_new', {'codProd': producto.producto.codProd}) }}"><svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 256 256"><path fill="#157347" d="M128 24a104 104 0 1 0 104 104A104.13 104.13 0 0 0 128 24m40 112h-32v32a8 8 0 0 1-16 0v-32H88a8 8 0 0 1 0-16h32V88a8 8 0 0 1 16 0v32h32a8 8 0 0 1 0 16"/></svg></a>
-                            <a href="{{ path('app_cesta_menos', {'codProd': producto.producto.codProd}) }}"><svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 12 12"><path fill="#157347" d="M1 6a5 5 0 1 1 10 0A5 5 0 0 1 1 6m3-.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1z"/></svg></a>
-                                <a class="btn btn-success boto" href="{{ path('app_cesta_delete', {'codProd': producto.producto.codProd}) }}">Eliminar</a>
-                
+	<h1 class="display-1">Cesta</h1>
+	{% if cesta|length >0 %}
+		<table class="table">
+			<thead>
+				<th>Nombre</th>
+				<th>Cantidad</th>
+				<th>Precio Unidad</th>
+				<th>Precio Total productos</th>
+				<th>otros</th>
+			</thead>
+			<tbody>
+				{% for producto in cesta %}
+					<tr>
+						<td>{{ producto.producto.nombre }}</td>
+						<td>{{ producto.cantidad }}</td>
+						<td>{{ producto.producto.precio }}</td>
+						<td>{{ producto.producto.precio*producto.cantidad }}</td>
+						<td class="d-flex gap-3">
+							<a href="{{ path('app_cesta_new', {'codProd': producto.producto.codProd}) }}">
+								<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewbox="0 0 256 256"><path fill="#157347" d="M128 24a104 104 0 1 0 104 104A104.13 104.13 0 0 0 128 24m40 112h-32v32a8 8 0 0 1-16 0v-32H88a8 8 0 0 1 0-16h32V88a8 8 0 0 1 16 0v32h32a8 8 0 0 1 0 16"/></svg>
+							</a>
+							<a href="{{ path('app_cesta_menos', {'codProd': producto.producto.codProd}) }}">
+								<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewbox="0 0 12 12"><path fill="#157347" d="M1 6a5 5 0 1 1 10 0A5 5 0 0 1 1 6m3-.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1z"/></svg>
+							</a>
+							<a class="btn btn-success boto" href="{{ path('app_cesta_delete', {'codProd': producto.producto.codProd}) }}">Eliminar</a>
 
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-                <a class="btn btn-success boto" href="/pedidos/new">Hacer el pedido</a>
-            {% else %}
-            <p>Su carrito no tiene productos</p>
-        {% endif %}
+
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<a class="btn btn-success boto" href="/pedidos/new">Hacer el pedido</a>
+	{% else %}
+		<p>Su carrito no tiene productos</p>
+	{% endif %}
 
 {% endblock %}

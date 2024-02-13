@@ -6,43 +6,39 @@
 
 {% block body %}
 
-    <div class="d-flex flex-column gap-5">
-	{% for categorium in categorias %}
+	<div class="d-flex flex-column gap-5">
+		{% for categorium in categorias %}
 
-		<section class="d-flex flex-column flex-wrap justify-content-center align-items-center gap-5">
-            <h3 class="">{{ categorium.nombre }}</h3>
-            <article class="d-flex align-items-center gap-5">
-            {% for producto in productos %}
-                {% if categorium.codCat == producto.categoria.codCat and producto.stock != 0 %}
-                    <div class="card" style="width: 18rem;">
-                        <img src="{{ asset('uploads/' ~ producto.foto) }}" class="card-img-top h-50" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ producto.nombre }}</h5>
-                            <p class="card-text">{{ producto.descripcion }}</p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">{{ producto.precio }}€</li>
+			<section class="d-flex flex-column flex-wrap justify-content-center align-items-center gap-5">
+				<h3 class="">{{ categorium.nombre }}</h3>
+				<article class="d-flex align-items-center gap-5">
+					{% for producto in productos %}
+						{% if categorium.codCat == producto.categoria.codCat and producto.stock != 0 %}
+							<div class="card" style="width: 18rem;">
+								<img src="{{ asset('uploads/' ~ producto.foto) }}" class="card-img-top h-50" alt="...">
+								<div class="card-body">
+									<h5 class="card-title">{{ producto.nombre }}</h5>
+									<p class="card-text">{{ producto.descripcion }}</p>
+								</div>
+								<ul class="list-group list-group-flush">
+									<li class="list-group-item">{{ producto.precio }}€</li>
 
-                        </ul>
-                        <div class="card-body d-flex gap-4">
-                            
-                                <a class="btn btn-success boto" href="{{ path('app_cesta_new', {'codProd': producto.codProd}) }}" class="card-link">Añadir a la cesta</a>
-                            
-                            
-                                <a class="btn btn-success boto"  href="{{ path('app_producto_detalle', {'codProd': producto.codProd}) }}" class="card-link">Ver</a>
-                            
-                        </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
+								</ul>
+								<div class="card-body d-flex gap-4">
+									<a class="btn btn-success boto" href="{{ path('app_cesta_new', {'codProd': producto.codProd}) }}" class="card-link">Añadir a la cesta</a>
+									<a class="btn btn-success boto" href="{{ path('app_producto_detalle', {'codProd': producto.codProd}) }}" class="card-link">Ver</a>
+								</div>
+							</div>
+						{% endif %}
+					{% endfor %}
 
-            </article>
-            <a class="btn btn-success w-25" href="{{ path('app_categoria_show_user', {'codCat': categorium.codCat}) }}">
+				</article>
+				<a class="btn btn-success w-25" href="{{ path('app_categoria_show_user', {'codCat': categorium.codCat}) }}">
 
-                    Ver más
+					Ver más
 
-            </a>
-        </section>
-	{% endfor %}
-    </div>
+				</a>
+			</section>
+		{% endfor %}
+	</div>
 {% endblock %}

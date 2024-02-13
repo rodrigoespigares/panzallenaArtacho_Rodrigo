@@ -1,57 +1,58 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}Categorias{% endblock %}
+{% block title %}Categorias
+{% endblock %}
 
 {% block body %}
-    <div>
-        <h1>Categorias</h1>
+	<div>
+		<h1>Categorias</h1>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>CodCat</th>
-                    <th>Nombre</th>
-                    <th>Descripcion</th>
-                    {% if app.user.roles[0]=="ROLE_ADMIN" %}
-                    <th>Opciones</th>
-                    {% endif %}
-                </tr>
-            </thead>
-            <tbody>
-            {% for categorium in categorias %}
-                <tr>
-                    <td>{{ categorium.codCat }}</td>
-                    <td>{{ categorium.nombre }}</td>
-                    <td>{{ categorium.descripcion }}</td>
-                    {% if app.user.roles[0]=="ROLE_ADMIN" %}
-                    <td class="d-flex gap-3">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>CodCat</th>
+					<th>Nombre</th>
+					<th>Descripcion</th>
+					{% if app.user.roles[0]=="ROLE_ADMIN" %}
+						<th>Opciones</th>
+					{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for categorium in categorias %}
+					<tr>
+						<td>{{ categorium.codCat }}</td>
+						<td>{{ categorium.nombre }}</td>
+						<td>{{ categorium.descripcion }}</td>
+						{% if app.user.roles[0]=="ROLE_ADMIN" %}
+							<td class="d-flex gap-3">
 
-                            <a class="btn btn-success boto" href="{{ path('app_categoria_show', {'codCat': categorium.codCat}) }}">Ver</a>
+								<a class="btn btn-success boto" href="{{ path('app_categoria_show', {'codCat': categorium.codCat}) }}">Ver</a>
 
-                            <a class="btn btn-success boto" href="{{ path('app_categoria_edit', {'codCat': categorium.codCat}) }}">Editar</a>
+								<a class="btn btn-success boto" href="{{ path('app_categoria_edit', {'codCat': categorium.codCat}) }}">Editar</a>
 
-                    </td>
-                    {% endif %}
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="4">No hay resultados</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+							</td>
+						{% endif %}
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4">No hay resultados</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 
-    <div class="formulario__admin__categorias">
-        {% if editar %}
+	<div class="formulario__admin__categorias">
+		{% if editar %}
 
-            {{ include('categoria/_form.html.twig', {'button_label': 'Confirmar'}) }}
-                <a class="btn btn-success boto" href="{{ path('app_categoria_index_admin') }}">Volver</a>
-            {{ include('categoria/_delete_form.html.twig') }}
-        {% else %}
-            {{ include('categoria/_form.html.twig') }}
-                <a class="btn btn-success boto" href="{{ path('app_categoria_index_admin') }}">Volver</a>
-        {% endif %}
-        
-    </div>
+			{{ include('categoria/_form.html.twig', {'button_label': 'Confirmar'}) }}
+			<a class="btn btn-success boto" href="{{ path('app_categoria_index_admin') }}">Volver</a>
+			{{ include('categoria/_delete_form.html.twig') }}
+		{% else %}
+			{{ include('categoria/_form.html.twig') }}
+			<a class="btn btn-success boto" href="{{ path('app_categoria_index_admin') }}">Volver</a>
+		{% endif %}
+
+	</div>
 {% endblock %}
