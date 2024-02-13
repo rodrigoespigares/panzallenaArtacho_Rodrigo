@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Positive;
 
-class ProductoType extends AbstractType
+class ProductoTypeEdit extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -38,7 +38,7 @@ class ProductoType extends AbstractType
                     'message' => 'La descripción es obligatoria.',
                 ]),
                 new Length([
-                    'max' => 100,
+                    'max' => 20,
                     'maxMessage' => 'La descripción no puede tener más de 20 caracteres.',
                 ]),
                 // Puedes agregar restricciones adicionales según tus necesidades
@@ -88,7 +88,16 @@ class ProductoType extends AbstractType
             'constraints' => [
                 // Puedes agregar restricciones adicionales según tus necesidades
             ],
-        ]);
+        ])
+        ->add('descatalogado', CheckboxType::class, [
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'La descripción es obligatoria.',
+                ]),
+            ],
+        ])
+        
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
