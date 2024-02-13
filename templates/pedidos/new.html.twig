@@ -22,9 +22,7 @@
         <div class="boton__delete">
             {{ include('pedidos/_form.html.twig') }}
         </div>
-        <button class="btn btn-success boto">
-            <a href="{{ path('app_pedidos_index') }}">Volver</a>
-        </button>
+        <a class="btn btn-success boto" href="{{ path('app_pedidos_index') }}">Volver</a>
     </div>
 
 {% endblock %}

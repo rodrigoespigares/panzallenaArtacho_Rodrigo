@@ -25,21 +25,23 @@
 
                         </ul>
                         <div class="card-body d-flex gap-4">
-                            <button class="btn btn-success boto">
-                                <a href="{{ path('app_cesta_new', {'codProd': producto.codProd}) }}" class="card-link">Añadir a la cesta</a>
-                            </button>
-                            <button class="btn btn-success boto">
-                                <a  href="{{ path('app_producto_detalle', {'codProd': producto.codProd}) }}" class="card-link">Ver</a>
-                            </button>
+                            
+                                <a class="btn btn-success boto" href="{{ path('app_cesta_new', {'codProd': producto.codProd}) }}" class="card-link">Añadir a la cesta</a>
+                            
+                            
+                                <a class="btn btn-success boto"  href="{{ path('app_producto_detalle', {'codProd': producto.codProd}) }}" class="card-link">Ver</a>
+                            
                         </div>
                     </div>
                 {% endif %}
             {% endfor %}
 
             </article>
-            <button class="btn btn-success w-25">
-                <a href="{{ path('app_categoria_show_user', {'codCat': categorium.codCat}) }}">Ver más</a>
-            </button>
+            <a class="btn btn-success w-25" href="{{ path('app_categoria_show_user', {'codCat': categorium.codCat}) }}">
+
+                    Ver más
+
+            </a>
         </section>
 	{% endfor %}
     </div>

@@ -88,10 +88,11 @@ class AdminController extends AbstractController
     }
 
     #[Route('/categoria/{codCat}', name: 'app_categoria_show', methods: ['GET'])]
-    public function show(Categoria $categorium): Response
+    public function show(Categoria $categorium, ProductoRepository $productoRepository): Response
     {
         return $this->render('categoria/show.html.twig', [
             'categorium' => $categorium,
+            'productos' => $productoRepository->findAll()
         ]);
     }
 

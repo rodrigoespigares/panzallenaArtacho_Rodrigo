@@ -1,6 +1,6 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}Productos{% endblock %}
+{% block title %}Usuarios{% endblock %}
 
 {% block body %}
     <div>
@@ -12,8 +12,8 @@
                     <th>Cod_res</th>
                     <th>Email</th>
                     <th>Roles</th>
-                    <th>IsVerified</th>
-                    <th>actions</th>
+                    <th>Verificado</th>
+                    <th>Opciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,11 +22,10 @@
                     <td>{{ restaurante.codRes }}</td>
                     <td>{{ restaurante.email }}</td>
                     <td>{{ restaurante.roles ? restaurante.roles|json_encode : '' }}</td>
-                    <td>{{ restaurante.isVerified ? 'Yes' : 'No' }}</td>
+                    <td>{{ restaurante.isVerified ? 'Si' : 'No' }}</td>
                     <td>
-                        <button class="btn btn-success boto">
-                            <a href="{{ path('app_restaurante_edit', {'cod_res': restaurante.cod_res}) }}">Editar</a>
-                        </button>
+                            <a class="btn btn-success boto" href="{{ path('app_restaurante_edit', {'cod_res': restaurante.cod_res}) }}">Editar</a>
+            
                     </td>
                 </tr>
             {% else %}
@@ -45,8 +44,6 @@
         {% else %}
             {{ include('producto/_form.html.twig') }}
         {% endif %}
-        <button class="btn btn-success boto">
-            <a href="{{ path('app_restaurante_index_admin') }}">Cancelar</a>
-        </button>
+            <a class="btn btn-success boto" href="{{ path('app_restaurante_index_admin') }}">Cancelar</a>
     </div>
 {% endblock %}

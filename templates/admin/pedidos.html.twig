@@ -20,14 +20,12 @@
             <tr>
                 <td>{{ pedido.codPed }}</td>
                 <td>{{ pedido.fecha ? pedido.fecha|date('Y-m-d') : '' }}</td>
-                <td>{{ pedido.enviado ? 'Yes' : 'No' }}</td>
+                <td>{{ pedido.enviado ? 'Si' : 'No' }}</td>
                 <td class="d-flex gap-3">
-                    <button class="btn btn-success boto">
-                        <a href="{{ path('app_pedidos_show', {'codPed': pedido.codPed}) }}">Ver</a>
-                    </button>
-                    <button class="btn btn-success boto">
-                        <a href="{{ path('app_pedidos_edit', {'codPed': pedido.codPed}) }}">Editar</a>
-                    </button>
+                        <a class="btn btn-success boto" href="{{ path('app_pedidos_show', {'codPed': pedido.codPed}) }}">Ver</a>
+        
+                        <a class="btn btn-success boto" href="{{ path('app_pedidos_edit', {'codPed': pedido.codPed}) }}">Editar</a>
+        
                 </td>
             </tr>
         {% else %}
@@ -42,9 +40,8 @@
     <div class="formulario__admin__pedidos">
         
             {{ include('pedidos/_form.html.twig',{'button_label': 'Confirmar'}) }}
-            <button class="btn btn-success boto">
-                <a href="{{ path('app_pedidos_index_admin') }}">Volver</a>
-            </button>
+                <a class="btn btn-success boto" href="{{ path('app_pedidos_index_admin') }}">Volver</a>
+
         
     </div>
     {% endif %}

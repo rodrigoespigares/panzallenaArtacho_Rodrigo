@@ -16,10 +16,8 @@
             <p>Precio: {{ producto.precio }}</p>
         </div>
     </article>
+        <a class="btn btn-success boto" href="{{ path('app_base') }}">Volver</a>
 
-    <button class="btn btn-success boto">
-        <a href="{{ path('app_base') }}">Volver</a>
-    </button>
     {% if app.user.roles[0]=="admin" %}
 
     {{ include('producto/_delete_form.html.twig') }}
