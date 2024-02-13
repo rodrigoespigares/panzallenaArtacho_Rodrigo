@@ -1,52 +1,51 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}Productos{% endblock %}
+{% block title %}Usuarios
+{% endblock %}
 
 {% block body %}
-    <div>
-        <h1>Usuarios</h1>
+	<div>
+		<h1>Usuarios</h1>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Cod_res</th>
-                    <th>Email</th>
-                    <th>Roles</th>
-                    <th>IsVerified</th>
-                    <th>actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for restaurante in restaurantes %}
-                <tr>
-                    <td>{{ restaurante.codRes }}</td>
-                    <td>{{ restaurante.email }}</td>
-                    <td>{{ restaurante.roles ? restaurante.roles|json_encode : '' }}</td>
-                    <td>{{ restaurante.isVerified ? 'Yes' : 'No' }}</td>
-                    <td>
-                        <button class="btn btn-success boto">
-                            <a href="{{ path('app_restaurante_edit', {'cod_res': restaurante.cod_res}) }}">Editar</a>
-                        </button>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="6">No hay resultados</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Cod_res</th>
+					<th>Email</th>
+					<th>Roles</th>
+					<th>Verificado</th>
+					<th>Opciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for restaurante in restaurantes %}
+					<tr>
+						<td>{{ restaurante.codRes }}</td>
+						<td>{{ restaurante.email }}</td>
+						<td>{{ restaurante.roles ? restaurante.roles|json_encode : '' }}</td>
+						<td>{{ restaurante.isVerified ? 'Si' : 'No' }}</td>
+						<td>
+							<a class="btn btn-success boto" href="{{ path('app_restaurante_edit', {'cod_res': restaurante.cod_res}) }}">Editar</a>
 
-    <div class="formulario__admin__usuarios">
-        {% if editar %}
-            <p>Usuario a editar: {{email}}</p>
-            {{ include('producto/_form.html.twig', {'button_label': 'Confirmar'}) }}
-        {% else %}
-            {{ include('producto/_form.html.twig') }}
-        {% endif %}
-        <button class="btn btn-success boto">
-            <a href="{{ path('app_restaurante_index_admin') }}">Cancelar</a>
-        </button>
-    </div>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="6">No hay resultados</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+	<div class="formulario__admin__usuarios">
+		{% if editar %}
+			<p>Usuario a editar:
+				{{email}}</p>
+			{{ include('producto/_form.html.twig', {'button_label': 'Confirmar'}) }}
+		{% else %}
+			{{ include('producto/_form.html.twig') }}
+		{% endif %}
+		<a class="btn btn-success boto" href="{{ path('app_restaurante_index_admin') }}">Cancelar</a>
+	</div>
 {% endblock %}

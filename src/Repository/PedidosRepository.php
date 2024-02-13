@@ -68,5 +68,7 @@ public function anadir($data,$carrito, RestauranteRepository $restauranteReposit
         $pedidosProductoRepository->anadir($value['id'],$pedido->getCodPed(),$value['cantidad'],$entityManager);
         $productoRepository->restar($value['id'],$value['cantidad'],$entityManager);
     }
+
+    return $pedido->getCodPed();
 }
 }

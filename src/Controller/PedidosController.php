@@ -50,16 +50,14 @@ class PedidosController extends AbstractController
                     $data['time'] = time();
                     $dateTime = new DateTime();
                     $dateTime->setTimestamp($data['time']);
-                    // Formatear la fecha y hora en el formato deseado
                     $data['fecha'] = $dateTime->format('Y-m-d H:i:s');
                     $data['enviado'] = false;
-                    // Obtén el cod_res del usuario
-                    $data['restaurante_id'] = $codRes = $user->getCod_res();
+                    $data['restaurante_id'] = $user->getCod_res();
                 }
-                $pedidosRepository->anadir($data,$sesion->get("carrito"),$restauranteRepository, $entityManager, $productoRepository);
+                $n_ped = $pedidosRepository->anadir($data,$sesion->get("carrito"),$restauranteRepository, $entityManager, $productoRepository);
 
-                $mail->sendEmail($mailerInterface,$sesion->get('carrito'));
-                $mail->sendEmailPedidos($mailerInterface,$sesion->get('carrito'));
+                $mail->sendEmail($mailerInterface,$sesion->get('carrito'), $n_ped);
+                $mail->sendEmailPedidos($mailerInterface,$sesion->get('carrito'),$n_ped);
                 $sesion->set("carrito",[]);
                 return $this->redirectToRoute('app_base', [], Response::HTTP_SEE_OTHER);
             }

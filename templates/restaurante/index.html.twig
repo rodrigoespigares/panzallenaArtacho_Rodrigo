@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Restaurante index{% endblock %}
+{% block title %}Restaurante{% endblock %}
 
 {% block body %}
-    <h1>Restaurante index</h1>
+    <h1>Restaurante</h1>
 
     <table class="table">
         <thead>
@@ -11,9 +11,9 @@
                 <th>Cod_res</th>
                 <th>Email</th>
                 <th>Roles</th>
-                <th>Password</th>
-                <th>IsVerified</th>
-                <th>actions</th>
+                <th>Contraseña</th>
+                <th>Verificado</th>
+                <th>Opciones</th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +23,7 @@
                 <td>{{ restaurante.email }}</td>
                 <td>{{ restaurante.roles ? restaurante.roles|json_encode : '' }}</td>
                 <td>{{ restaurante.password }}</td>
-                <td>{{ restaurante.isVerified ? 'Yes' : 'No' }}</td>
+                <td>{{ restaurante.isVerified ? 'Si' : 'No' }}</td>
                 <td>
                     <a href="{{ path('app_restaurante_show', {'cod_res': restaurante.cod_res}) }}">show</a>
                     <a href="{{ path('app_restaurante_edit', {'cod_res': restaurante.cod_res}) }}">edit</a>

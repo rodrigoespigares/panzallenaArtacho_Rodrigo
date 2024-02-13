@@ -9,9 +9,11 @@ use App\Entity\Restaurante;
 use App\Form\Admin_editFormType;
 use App\Form\Admin_RegistrationFormType;
 use App\Form\CategoriaType;
+use App\Form\CategoriaTypeEdit;
 use App\Form\EditaPeiddosType;
 use App\Form\PedidosType;
 use App\Form\ProductoType;
+use App\Form\ProductoTypeEdit;
 use App\Repository\CategoriaRepository;
 use App\Repository\PedidosRepository;
 use App\Repository\ProductoRepository;
@@ -88,17 +90,18 @@ class AdminController extends AbstractController
     }
 
     #[Route('/categoria/{codCat}', name: 'app_categoria_show', methods: ['GET'])]
-    public function show(Categoria $categorium): Response
+    public function show(Categoria $categorium, ProductoRepository $productoRepository): Response
     {
         return $this->render('categoria/show.html.twig', [
             'categorium' => $categorium,
+            'productos' => $productoRepository->findAll()
         ]);
     }
 
     #[Route('/categoria/{codCat}/edit', name: 'app_categoria_edit', methods: ['GET', 'POST'])]
     public function catEdit(Request $request, Categoria $categorium, EntityManagerInterface $entityManager, CategoriaRepository $categoriaRepository): Response
     {
-        $form = $this->createForm(CategoriaType::class, $categorium);
+        $form = $this->createForm(CategoriaTypeEdit::class, $categorium);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -264,7 +267,7 @@ class AdminController extends AbstractController
     #[Route('/producto/{codProd}/edit', name: 'app_producto_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Producto $producto, EntityManagerInterface $entityManager, ProductoRepository $productoRepository): Response
     {
-        $form = $this->createForm(ProductoType::class, $producto);
+        $form = $this->createForm(ProductoTypeEdit::class, $producto);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

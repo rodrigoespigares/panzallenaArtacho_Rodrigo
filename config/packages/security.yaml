@@ -27,6 +27,7 @@ security:
                 # target: app_any_route
                 # where to redirect after logout
                 # target: app_any_route
+            access_denied_url: "/index"
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -44,6 +45,7 @@ security:
         - { path: ^/index, roles: 'ROLE_RESTAURANTE' }
         - { path: ^/producto, roles: 'ROLE_RESTAURANTE' }
         - { path: ^/categoria, roles: 'ROLE_RESTAURANTE' }
+        - { path: ^/logout, roles: 'ROLE_RESTAURANTE' }
 
 when@test:
     security:

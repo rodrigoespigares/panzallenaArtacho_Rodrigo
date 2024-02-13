@@ -12,14 +12,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MailerController extends AbstractController
 {
-    public function sendEmail(MailerInterface $mailer,$carrito): Response
+    public function sendEmail(MailerInterface $mailer,$carrito,$n_ped): Response
     {
         $user = $this->getUser();
         if ($user instanceof \App\Entity\Restaurante) {
             $email = $user->getEmail();
         
         }
-        $htmlContent = $this->renderView('/mailer/mail.html.twig', ['cesta' => $carrito]);
+        $htmlContent = $this->renderView('/mailer/mail.html.twig', ['cesta' => $carrito, "n_ped" => $n_ped]);
         try{
         $email = (new Email())
             ->from(new Address('no-replay@tripallena.com','Departamento de pedidos'))
@@ -40,13 +40,13 @@ class MailerController extends AbstractController
             return new Response('Error al enviar el correo electrónico: ' . $e->getMessage());
         }
     }
-    public function sendEmailPedidos(MailerInterface $mailer,$carrito): Response
+    public function sendEmailPedidos(MailerInterface $mailer,$carrito,$n_ped): Response
     {
         
         
         try{
 
-        $htmlContent = $this->renderView('/mailer/mail.html.twig', ['cesta' => $carrito]);
+        $htmlContent = $this->renderView('/mailer/mailPedidos.html.twig', ['cesta' => $carrito, "n_ped" =>$n_ped]);
         $email = (new Email())
             ->from(new Address('no-replay@tripallena.com','Departamento de pedidos'))
             ->to('pedidos@tripallena.com')

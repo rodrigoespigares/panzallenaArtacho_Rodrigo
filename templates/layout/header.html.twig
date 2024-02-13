@@ -4,38 +4,37 @@
 		{% if app.user %}
 			<div class="dropdown">
 				<button class="btn btn-secondary dropdown-toggle boton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    {{ app.user.email }}</p>
-				</button>
-				<ul class="dropdown-menu">
+					{{ app.user.email }}</p>
+			</button>
+			<ul class="dropdown-menu">
 
-                    
-                    {% if app.user.roles[0]!="ROLE_RESTAURANTE" %}
+
+				{% if app.user.roles[0]!="ROLE_RESTAURANTE" %}
 					<li>
 						<a class="dropdown-item fs-3" href="/admin/pedidos">Pedidos</a>
 					</li>
 
-						{% if app.user.roles[0]=="ROLE_ADMIN" %}
-							<li>
-								<a class="dropdown-item fs-3" href="/admin/producto">Productos</a>
-							</li>
-							<li>
-								<a class="dropdown-item fs-3" href="/admin/categoria">Categorias</a>
-							</li>
-							<li>
-								<a class="dropdown-item fs-3" href="/admin/users">Usuarios</a>
-							</li>
-						{% endif %}
-                    {% endif %}
-					<li>
-						<a class="dropdown-item fs-3" href="/logout">Cerrar sesión</a>
-					</li>
-				</ul>
-			</div>
-		{% endif %}
-	</div>
-	<div class="header__menu">
-		<a href="/index">Inicio</a>
-		<a href="/cesta">Cesta</a>
-		<a href="/pedidos">Mis pedidos</a>
-	</div>
-</header>
+					{% if app.user.roles[0]=="ROLE_ADMIN" %}
+						<li>
+							<a class="dropdown-item fs-3" href="/admin/producto">Productos</a>
+						</li>
+						<li>
+							<a class="dropdown-item fs-3" href="/admin/categoria">Categorías</a>
+						</li>
+						<li>
+							<a class="dropdown-item fs-3" href="/admin/users">Usuarios</a>
+						</li>
+					{% endif %}
+				{% endif %}
+				<li>
+					<a class="dropdown-item fs-3" href="/logout">Cerrar sesión</a>
+				</li>
+			</ul>
+		</div>
+	{% endif %}
+</div>
+<div class="header__menu">
+	<a href="/index">Inicio</a>
+	<a href="/cesta">Cesta</a>
+	<a href="/pedidos">Mis pedidos</a>
+</div></header>
