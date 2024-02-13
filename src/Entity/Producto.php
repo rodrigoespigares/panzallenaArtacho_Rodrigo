@@ -44,6 +44,9 @@ class Producto
     #[ORM\Column]
     private ?float $precio = null;
 
+    #[ORM\Column]
+    private bool $descatalogado = false;
+
 
 
 
@@ -145,5 +148,17 @@ class Producto
 
     public function __toString(){
         return (string) $this->categoria;
+    }
+
+    public function isDescatalogado(): ?bool
+    {
+        return $this->descatalogado;
+    }
+
+    public function setDescatalogado(bool $descatalogado): static
+    {
+        $this->descatalogado = $descatalogado;
+
+        return $this;
     }
 }

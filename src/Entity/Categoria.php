@@ -19,6 +19,9 @@ class Categoria
     #[ORM\Column(length: 200)]
     private ?string $descripcion = null;
 
+    #[ORM\Column]
+    private bool $descatalogado = false;
+
 
     public function getCodCat(): ?int
     {
@@ -57,5 +60,17 @@ class Categoria
     }
     public function __toString(){
         return (string) $this->codCat;
+    }
+
+    public function isDescatalogado(): ?bool
+    {
+        return $this->descatalogado;
+    }
+
+    public function setDescatalogado(bool $descatalogado): static
+    {
+        $this->descatalogado = $descatalogado;
+
+        return $this;
     }
 }
