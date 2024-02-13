@@ -50,8 +50,7 @@ class ProductoRepository extends ServiceEntityRepository
 public function extract()
 {
     
-    // Assuming your entity class is "Producto"
-    return $this->findBy([], null, 5);
+    return $this->findBy(['descatalogado' => false], null, null);
     
 }
 public function restar($id, $resta, $entityManager){

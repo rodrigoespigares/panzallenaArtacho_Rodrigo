@@ -17,6 +17,7 @@
 					<th>Stock</th>
 					<th>Foto</th>
 					<th>Precio</th>
+					<th>Descatalogado</th>
 					<th>Opciones</th>
 				</tr>
 			</thead>
@@ -30,6 +31,7 @@
 						<td>{{ producto.stock }}</td>
 						<td>{{ producto.foto }}</td>
 						<td>{{ producto.precio }}</td>
+						<td>{{ producto.descatalogado?"Si":"No" }}</td>
 						<td class="d-flex gap-3">
 							<a class="btn btn-success boto" href="{{ path('app_producto_show', {'codProd': producto.codProd}) }}">Ver</a>
 							{% if app.user.roles[0]=="ROLE_ADMIN" %}
@@ -50,7 +52,6 @@
 		{% if editar %}
 			{{ include('producto/_form.html.twig', {'button_label': 'Confirmar'}) }}
 			<a class="btn btn-success boto" href="{{ path('app_producto_index_admin') }}">Volver</a>
-			{{ include('producto/_delete_form.html.twig') }}
 		{% else %}
 			{{ include('producto/_form.html.twig') }}
 			<a class="btn btn-success boto" href="{{ path('app_producto_index_admin') }}">Volver</a>

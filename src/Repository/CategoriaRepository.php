@@ -46,11 +46,21 @@ class CategoriaRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+public function findCatalogados() {
+    return $this->createQueryBuilder('c')
+    ->andWhere('c.descatalogado = :descatalogado')
+    ->setParameter('descatalogado', false)
+    ->getQuery()
+    ->getResult();
+}
+
 public function extract(){
     // $entityManager = $this->getDoctrine()->getManager();
     $query = $this->createQueryBuilder('c')
-        ->innerJoin('App\Entity\Producto', 'p', 'WITH', 'c.codCat = p.categoria')
-        ->getQuery();
+    ->innerJoin('App\Entity\Producto', 'p', 'WITH', 'c.codCat = p.categoria')
+    ->andWhere('c.descatalogado = :descatalogado')
+    ->setParameter('descatalogado', false)
+    ->getQuery();
 
     $categorias = $query->getResult();
     // Haz algo con las categorías obtenidas, por ejemplo, devuélvelas o realiza alguna operación.

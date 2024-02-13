@@ -45,13 +45,7 @@ class CategoriaTypeEdit extends AbstractType
                 ]),
             ],
         ])
-        ->add('descatalogado', CheckboxType::class, [
-            'constraints' => [
-                new NotBlank([
-                    'message' => 'La descripción es obligatoria.',
-                ]),
-            ],
-        ])
+        ->add('descatalogado')
         
         ;
     }

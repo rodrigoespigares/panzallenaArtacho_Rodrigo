@@ -13,7 +13,7 @@
 				<h3 class="">{{ categorium.nombre }}</h3>
 				<article class="d-flex align-items-center gap-5">
 					{% for producto in productos %}
-						{% if categorium.codCat == producto.categoria.codCat and producto.stock != 0 %}
+						{% if categorium.codCat == producto.categoria.codCat %}
 							<div class="card" style="width: 18rem;">
 								<img src="{{ asset('uploads/' ~ producto.foto) }}" class="card-img-top h-50" alt="...">
 								<div class="card-body">
@@ -30,6 +30,8 @@
 								</div>
 							</div>
 						{% endif %}
+					{% else %}
+						<h3>No hay productos disponibles de esta categoría</h3>
 					{% endfor %}
 
 				</article>

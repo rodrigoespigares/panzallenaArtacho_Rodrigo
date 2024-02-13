@@ -13,6 +13,7 @@
 					<th>CodCat</th>
 					<th>Nombre</th>
 					<th>Descripcion</th>
+					<th>Descatalogado</th>
 					{% if app.user.roles[0]=="ROLE_ADMIN" %}
 						<th>Opciones</th>
 					{% endif %}
@@ -24,6 +25,7 @@
 						<td>{{ categorium.codCat }}</td>
 						<td>{{ categorium.nombre }}</td>
 						<td>{{ categorium.descripcion }}</td>
+						<td>{{ categorium.descatalogado?"Si":"No"}}</td>
 						{% if app.user.roles[0]=="ROLE_ADMIN" %}
 							<td class="d-flex gap-3">
 
@@ -48,7 +50,7 @@
 
 			{{ include('categoria/_form.html.twig', {'button_label': 'Confirmar'}) }}
 			<a class="btn btn-success boto" href="{{ path('app_categoria_index_admin') }}">Volver</a>
-			{{ include('categoria/_delete_form.html.twig') }}
+			
 		{% else %}
 			{{ include('categoria/_form.html.twig') }}
 			<a class="btn btn-success boto" href="{{ path('app_categoria_index_admin') }}">Volver</a>

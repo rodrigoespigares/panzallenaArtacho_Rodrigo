@@ -89,13 +89,7 @@ class ProductoTypeEdit extends AbstractType
                 // Puedes agregar restricciones adicionales según tus necesidades
             ],
         ])
-        ->add('descatalogado', CheckboxType::class, [
-            'constraints' => [
-                new NotBlank([
-                    'message' => 'La descripción es obligatoria.',
-                ]),
-            ],
-        ])
+        ->add('descatalogado')
         
         ;
     }

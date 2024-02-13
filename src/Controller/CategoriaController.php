@@ -19,7 +19,7 @@ class CategoriaController extends AbstractController
     public function index(CategoriaRepository $categoriaRepository): Response
     {
         return $this->render('categoria/index.html.twig', [
-            'categorias' => $categoriaRepository->findAll(),
+            'categorias' => $categoriaRepository->findCatalogados(),
         ]);
     }
     #[Route('/{codCat}', name: 'app_categoria_show_user', methods: ['GET'])]
