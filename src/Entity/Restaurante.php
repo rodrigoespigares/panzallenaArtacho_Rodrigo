@@ -32,6 +32,18 @@ class Restaurante implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\Column(length: 45)]
+    private ?string $pais = null;
+
+    #[ORM\Column]
+    private ?int $cp = null;
+
+    #[ORM\Column(length: 45)]
+    private ?string $ciudad = null;
+
+    #[ORM\Column(length: 200)]
+    private ?string $direccion = null;
+
     public function getCod_res(): ?int
     {
         return $this->cod_res;
@@ -114,6 +126,54 @@ class Restaurante implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getPais(): ?string
+    {
+        return $this->pais;
+    }
+
+    public function setPais(string $pais): static
+    {
+        $this->pais = $pais;
+
+        return $this;
+    }
+
+    public function getCp(): ?int
+    {
+        return $this->cp;
+    }
+
+    public function setCp(int $cp): static
+    {
+        $this->cp = $cp;
+
+        return $this;
+    }
+
+    public function getCiudad(): ?string
+    {
+        return $this->ciudad;
+    }
+
+    public function setCiudad(string $ciudad): static
+    {
+        $this->ciudad = $ciudad;
+
+        return $this;
+    }
+
+    public function getDireccion(): ?string
+    {
+        return $this->direccion;
+    }
+
+    public function setDireccion(string $direccion): static
+    {
+        $this->direccion = $direccion;
 
         return $this;
     }
