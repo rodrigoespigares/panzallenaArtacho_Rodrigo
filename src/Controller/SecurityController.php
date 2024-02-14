@@ -10,6 +10,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
+    /** Función para cargar el login de base y además iniciar sesión */
     #[Route(path: '/', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils, RestauranteRepository $restauranteRepository): Response
     {
@@ -30,7 +31,7 @@ class SecurityController extends AbstractController
             'error' => $error
         ]);
     }
-
+    /** Función para cerrar la sesión */
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {

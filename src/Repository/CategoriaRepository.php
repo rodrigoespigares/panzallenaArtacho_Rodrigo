@@ -21,49 +21,25 @@ class CategoriaRepository extends ServiceEntityRepository
         parent::__construct($registry, Categoria::class);
     }
 
-//    /**
-//     * @return Categoria[] Returns an array of Categoria objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /** Función para buscar las categorias catalogadas */
+    public function findCatalogados() {
+        return $this->createQueryBuilder('c')
+        ->andWhere('c.descatalogado = :descatalogado')
+        ->setParameter('descatalogado', false)
+        ->getQuery()
+        ->getResult();
+    }
+    /** Función para buscar las categorias catalogadas y que además tengan productos*/
+    public function extract(){
+        // $entityManager = $this->getDoctrine()->getManager();
+        $query = $this->createQueryBuilder('c')
+        ->innerJoin('App\Entity\Producto', 'p', 'WITH', 'c.codCat = p.categoria')
+        ->andWhere('c.descatalogado = :descatalogado')
+        ->setParameter('descatalogado', false)
+        ->getQuery();
 
-//    public function findOneBySomeField($value): ?Categoria
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
-
-public function findCatalogados() {
-    return $this->createQueryBuilder('c')
-    ->andWhere('c.descatalogado = :descatalogado')
-    ->setParameter('descatalogado', false)
-    ->getQuery()
-    ->getResult();
-}
-
-public function extract(){
-    // $entityManager = $this->getDoctrine()->getManager();
-    $query = $this->createQueryBuilder('c')
-    ->innerJoin('App\Entity\Producto', 'p', 'WITH', 'c.codCat = p.categoria')
-    ->andWhere('c.descatalogado = :descatalogado')
-    ->setParameter('descatalogado', false)
-    ->getQuery();
-
-    $categorias = $query->getResult();
-    // Haz algo con las categorías obtenidas, por ejemplo, devuélvelas o realiza alguna operación.
-    return $categorias;
-}
+        $categorias = $query->getResult();
+        // Haz algo con las categorías obtenidas, por ejemplo, devuélvelas o realiza alguna operación.
+        return $categorias;
+    }
 }

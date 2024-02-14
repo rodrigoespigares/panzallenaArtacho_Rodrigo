@@ -22,44 +22,18 @@ class ProductoRepository extends ServiceEntityRepository
         parent::__construct($registry, Producto::class);
     }
 
-//    /**
-//     * @return Producto[] Returns an array of Producto objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Producto
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
-
-public function extract()
-{
-    
-    return $this->findBy(['descatalogado' => false], null, null);
-    
-}
-public function restar($id, $resta, $entityManager){
-    $productoRepository = $entityManager->getRepository(Producto::class);
-    $producto = $productoRepository->find($id);
-    $nuevaCantidad = $producto->getStock() - $resta;
-    $producto->setStock($nuevaCantidad);
-    $entityManager->persist($producto);
-    $entityManager->flush();
-}
+    /** Fuuncion para extraer los productos que no estan descatalogados */
+    public function extract()
+    {
+        return $this->findBy(['descatalogado' => false], null, null);
+    }
+    public function restar($id, $resta, $entityManager){
+        $productoRepository = $entityManager->getRepository(Producto::class);
+        $producto = $productoRepository->find($id);
+        $nuevaCantidad = $producto->getStock() - $resta;
+        $producto->setStock($nuevaCantidad);
+        $entityManager->persist($producto);
+        $entityManager->flush();
+    }
 
 }

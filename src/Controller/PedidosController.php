@@ -18,9 +18,11 @@ use Symfony\Component\Routing\Attribute\Route;
 use DateTime;
 use Symfony\Component\Mailer\MailerInterface;
 
+/** Controlador para gestionar los pedidos */
 #[Route('/pedidos')]
 class PedidosController extends AbstractController
 {
+    /** Función para ver todos tus pedidos */
     #[Route('/', name: 'app_pedidos_index', methods: ['GET'])]
     public function index(PedidosRepository $pedidosRepository): Response
     {
@@ -35,7 +37,7 @@ class PedidosController extends AbstractController
             'pedidos' => $pedidos,
         ]);
     }
-
+    /**  Función para crear un nuevo pedido */
     #[Route('/new', name: 'app_pedidos_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager,SessionInterface $sesion, PedidosRepository $pedidosRepository,RestauranteRepository $restauranteRepository, MailerController $mail, MailerInterface $mailerInterface, ProductoRepository $productoRepository): Response
     {
@@ -73,7 +75,7 @@ class PedidosController extends AbstractController
             return $this->redirectToRoute("app_base");
         }
     }
-
+    /** Función para ver el detalle de un pedido introduciendo el id del mismo */
     #[Route('/{codPed}', name: 'app_pedidos_show', methods: ['GET'])]
     public function show(Pedidos $pedido,EntityManagerInterface $entityManager, PedidosProductoRepository $repositoryPedidosProductos): Response
     {

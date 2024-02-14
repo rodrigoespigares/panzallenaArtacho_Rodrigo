@@ -4,14 +4,14 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
-use Symfony\Component\Routing\Annotation\Route;
 
+/** Función para gestionar el envio de correos */
 class MailerController extends AbstractController
 {
+    /** Función para enviar un correo al cliente con los datos de carrito, y el número de pedido */
     public function sendEmail(MailerInterface $mailer,$carrito,$n_ped): Response
     {
         $user = $this->getUser();
@@ -40,12 +40,10 @@ class MailerController extends AbstractController
             return new Response('Error al enviar el correo electrónico: ' . $e->getMessage());
         }
     }
+    /** Función para enviar un correo al departamento de pedidos con los datos de carrito, y el número de pedido */
     public function sendEmailPedidos(MailerInterface $mailer,$carrito,$n_ped): Response
     {
-        
-        
         try{
-
         $htmlContent = $this->renderView('/mailer/mailPedidos.html.twig', ['cesta' => $carrito, "n_ped" =>$n_ped]);
         $email = (new Email())
             ->from(new Address('no-replay@tripallena.com','Departamento de pedidos'))
@@ -64,8 +62,6 @@ class MailerController extends AbstractController
         } catch (\Exception $e) {
             // Manejar el error
             return new Response('Error al enviar el correo electrónico: ' . $e->getMessage());
-        }
-
-        
+        }        
     }
 }

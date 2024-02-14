@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class BaseController extends AbstractController
 {
+    /** Carga principal de todas las categorias y los productos permitidos */
     #[Route('/index', name: 'app_base')]
     public function index(CategoriaRepository $categoriaRepository, ProductoRepository $productoRepository): Response
     {
@@ -29,6 +30,7 @@ class BaseController extends AbstractController
             'categorias' => $cat,'productos' => $permitidos
         ]);
     }
+    /**Carga del detalle de un producto por el id */
     #[Route('/detalle/producto/{codProd}', name: 'app_producto_detalle', methods: ['GET'])]
     public function show(Producto $producto): Response
     {

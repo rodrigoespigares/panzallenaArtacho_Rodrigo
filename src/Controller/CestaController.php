@@ -8,9 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
+/** Controlador para gestionar la cesta */
 #[Route('/cesta')]
 class CestaController extends AbstractController
 {
+    /** Función para ver el detalle de la cesta */
     #[Route('/', name: 'app_cesta')]
     public function index(SessionInterface $session): Response
     {
@@ -20,7 +22,7 @@ class CestaController extends AbstractController
             'cesta' => $resultado
         ]);
     }
-
+    /** Función para crear un nuevo producto pasandole el ID */
     #[Route('/new/{codProd}', name: 'app_cesta_new', methods: ['GET'])]
     public function new(Producto $producto, SessionInterface $session): Response
     {
@@ -48,7 +50,7 @@ class CestaController extends AbstractController
         $session->set('carrito', $carrito);
         return  $this->redirectToRoute("app_cesta");
     }
-
+    /** Función para restar un producto pasandole el ID */
     #[Route('/restar/{codProd}', name: 'app_cesta_menos', methods: ['GET'])]
     public function menos(Producto $producto, SessionInterface $session): Response
     {
@@ -68,7 +70,7 @@ class CestaController extends AbstractController
 
         return  $this->redirectToRoute("app_cesta");
     }
-
+    /** Función para eliminar un producto el carrito por el id */
     #[Route('/delete/{codProd}', name: 'app_cesta_delete', methods: ['GET'])]
     public function delete(Producto $producto, SessionInterface $session): Response
     {

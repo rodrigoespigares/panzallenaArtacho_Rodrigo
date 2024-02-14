@@ -47,7 +47,7 @@ class PedidosRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-
+/** Función para añadir un pedido */
 public function anadir($data,$carrito, RestauranteRepository $restauranteRepository, EntityManagerInterface $entityManager, ProductoRepository $productoRepository) {
     $restauranteId = $data['restaurante_id'];
     
@@ -60,7 +60,7 @@ public function anadir($data,$carrito, RestauranteRepository $restauranteReposit
     $pedido->setFecha($fecha);
     $pedido->setEnviado(false);
 
-    // Persistir el pedido en la base de datos
+    // Crear el pedido en la base de datos
     $entityManager->persist($pedido);
     $entityManager->flush();
     foreach ($carrito as $value) {

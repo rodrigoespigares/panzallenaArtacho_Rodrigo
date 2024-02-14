@@ -19,8 +19,15 @@ class ProductoController extends AbstractController
     #[Route('/', name: 'app_producto_index', methods: ['GET'])]
     public function index(ProductoRepository $productoRepository): Response
     {
+        $prod = $productoRepository->extract();
+        $permitidos = [];
+        for ($i=0; $i < count($prod); $i++) { 
+            if($prod[$i]->getStock()>0){
+                array_push($permitidos, $prod[$i]);
+            }
+        }
         return $this->render('producto/index.html.twig', [
-            'productos' => $productoRepository->findAll(),
+            'productos' => $permitidos,
         ]);
     }
 

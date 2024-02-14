@@ -11,7 +11,6 @@ use App\Form\Admin_RegistrationFormType;
 use App\Form\CategoriaType;
 use App\Form\CategoriaTypeEdit;
 use App\Form\EditaPeiddosType;
-use App\Form\PedidosType;
 use App\Form\ProductoType;
 use App\Form\ProductoTypeEdit;
 use App\Repository\CategoriaRepository;
@@ -29,23 +28,23 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
+/** Controlador para gestionar los permisos de un administrador */
 #[Route('/admin')]
 class AdminController extends AbstractController
 {
+    // Variables necesarias en el controlador
     private EmailVerifier $emailVerifier;
 
+    // Constructor del controlador
     public function __construct(EmailVerifier $emailVerifier)
     {
         $this->emailVerifier = $emailVerifier;
     }
-    #[Route('/', name: 'app_admin')]
-    public function index(): Response
-    {
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
-        ]);
-    }
-    /** Categorias */
+    // Comienzo de la gestión de la parte de categorias 
+
+    /**
+     * Función principal para la carga de categorias en la parte del servidor
+     */
     #[Route('/categoria', name: 'app_categoria_index_admin', methods: ['GET', 'POST'])]
     public function indexCategoria(Request $request, CategoriaRepository $categoriaRepository, EntityManagerInterface $entityManager): Response
     {
@@ -66,29 +65,7 @@ class AdminController extends AbstractController
             'editar'=>false,
         ]);
     }
-
-
-
-    #[Route('/categoria/new', name: 'app_categoria_new', methods: ['GET', 'POST'])]
-    public function catNew(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $categorium = new Categoria();
-        $form = $this->createForm(CategoriaType::class, $categorium);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($categorium);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_categoria_index_admin', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('categoria/new.html.twig', [
-            'categorium' => $categorium,
-            'form' => $form,
-        ]);
-    }
-
+    /** Función para ver el detalle de una categoria desde la parte del administrador */
     #[Route('/categoria/{codCat}', name: 'app_categoria_show', methods: ['GET'])]
     public function show(Categoria $categorium, ProductoRepository $productoRepository): Response
     {
@@ -97,7 +74,7 @@ class AdminController extends AbstractController
             'productos' => $productoRepository->findAll()
         ]);
     }
-
+    /** Fundión para editar una categoria */
     #[Route('/categoria/{codCat}/edit', name: 'app_categoria_edit', methods: ['GET', 'POST'])]
     public function catEdit(Request $request, Categoria $categorium, EntityManagerInterface $entityManager, CategoriaRepository $categoriaRepository): Response
     {
@@ -117,27 +94,19 @@ class AdminController extends AbstractController
             'editar'=>true,
         ]);
     }
-
-    #[Route('/categoria/{codCat}', name: 'app_categoria_delete', methods: ['POST'])]
-    public function catDelete(Request $request, Categoria $categorium, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$categorium->getCodCat(), $request->request->get('_token'))) {
-            $entityManager->remove($categorium);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_categoria_index_admin', [], Response::HTTP_SEE_OTHER);
-    }
-    /** PEDIDOS */
+    // Comienzo de la gestión de la parte de pedidos
+    
+    /** Carga de todos los pedidos en la parte del administrador con la capacidad de ver todos los pedidos disponibles */
     #[Route('/pedidos', name: 'app_pedidos_index_admin', methods: ['GET', 'POST'])]
     public function pedidosIndex(PedidosRepository $pedidosRepository): Response
     {
-
         return $this->render('admin/pedidos.html.twig', [
             'pedidos' => $pedidosRepository->findAll(),
             'editar'=>false,
         ]);
     }
+
+    /** Función para editar un pedido SOLO ESTARA DISPONIBLE EL CAMPO ENVIADO */
     #[Route('/pedidos/{codPed}/edit', name: 'app_pedidos_edit', methods: ['GET', 'POST'])]
     public function pedEdit(Request $request, Pedidos $pedido, EntityManagerInterface $entityManager,PedidosRepository $pedidosRepository): Response
     {
@@ -156,17 +125,6 @@ class AdminController extends AbstractController
             'form' => $form,
             'editar'=> true,
         ]);
-    }
-
-    #[Route('/pedidos/{codPed}', name: 'app_pedidos_delete', methods: ['POST'])]
-    public function pedDelete(Request $request, Pedidos $pedido, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$pedido->getCodPed(), $request->request->get('_token'))) {
-            $entityManager->remove($pedido);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_pedidos_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/producto/new', name: 'app_producto_new', methods: ['GET', 'POST'])]

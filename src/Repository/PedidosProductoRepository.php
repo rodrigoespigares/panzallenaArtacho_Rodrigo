@@ -24,32 +24,8 @@ class PedidosProductoRepository extends ServiceEntityRepository
         parent::__construct($registry, PedidosProducto::class);
     }
 
-//    /**
-//     * @return PedidosProducto[] Returns an array of PedidosProducto objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?PedidosProducto
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /** Función para añadir un pedido */
     public function anadir($p_id, $ped_id, $cant, EntityManagerInterface $entityManager) {
-        // Suponiendo que tienes un repositorio de productos, puedes obtener el producto por su ID
         $ped_prod = new PedidosProducto();
 
         $producto = $entityManager->getRepository(Producto::class)->find($p_id);
@@ -64,7 +40,7 @@ class PedidosProductoRepository extends ServiceEntityRepository
             $entityManager->flush();
         }
     }
-
+    /** Función para obtener los productos */
     public function todoProduct(EntityManagerInterface $entityManager, $p_id){
         $productosAsociados=$entityManager->getRepository(PedidosProducto::class)->findBy(['pedido'=>$p_id]);
         $productos=[];
