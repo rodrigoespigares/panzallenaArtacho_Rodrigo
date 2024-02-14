@@ -21,7 +21,7 @@ class BaseController extends AbstractController
         $cat = $categoriaRepository->extract();
         $prod = $productoRepository->extract();
         $permitidos = [];
-        for ($i=0; count($prod) <= 5 && $i < count($prod); $i++) { 
+        for ($i=0; $i < 5 && $i < count($prod); $i++) { 
             if($prod[$i]->getStock()>0){
                 array_push($permitidos, $prod[$i]);
             }

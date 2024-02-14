@@ -3,47 +3,27 @@
 {% block title %}Producto{% endblock %}
 
 {% block body %}
-    <h1>Producto</h1>
+    <h1>Productos</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>CodProd</th>
-                <th>Nombre</th>
-                <th>Descripcion</th>
-                <th>Peso</th>
-                <th>Stock</th>
-                <th>Foto</th>
-                <th>Precio</th>
-                <th>Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
+    <section class="d-flex flex-wrap gap-5"> 
         {% for producto in productos %}
-            <tr>
-                <td>{{ producto.codProd }}</td>
-                <td>{{ producto.nombre }}</td>
-                <td>{{ producto.descripcion }}</td>
-                <td>{{ producto.peso }}</td>
-                <td>{{ producto.stock }}</td>
-                <td>{{ producto.foto }}</td>
-                <td>{{ producto.precio }}</td>
-                <td>
-                    <a href="{{ path('app_cesta_new', {'codProd': producto.codProd}) }}">Añadir a la cesta</a>
-                    <a href="{{ path('app_producto_show', {'codProd': producto.codProd}) }}">Ver</a>
-                    {% if app.user.roles[0]=="ROLE_ADMIN" %}
-                    <a href="{{ path('app_producto_edit', {'codProd': producto.codProd}) }}">Editar</a>
-                    {% endif %}
-                </td>
-            </tr>
+            <div class="card" style="width: 18rem;">
+                <img src="{{ asset('uploads/' ~ producto.foto) }}" class="card-img-top h-50" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ producto.nombre }}</h5>
+                    <p class="card-text">{{ producto.descripcion }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{ producto.precio }}€</li>
+
+                </ul>
+                <div class="card-body d-flex gap-4">
+                    <a class="btn btn-success boto" href="{{ path('app_cesta_new', {'codProd': producto.codProd}) }}" class="card-link">Añadir a la cesta</a>
+                    <a class="btn btn-success boto" href="{{ path('app_producto_detalle', {'codProd': producto.codProd}) }}" class="card-link">Ver</a>
+                </div>
+            </div>
         {% else %}
-            <tr>
-                <td colspan="8">No hay resultados</td>
-            </tr>
+            <h3>No hay productos disponibles de esta categoría</h3>
         {% endfor %}
-        </tbody>
-    </table>
-    {% if app.user.roles[0]=="ROLE_ADMIN" %}
-    <a href="{{ path('app_producto_new') }}">Crear uno nuevo</a>
-    {% endif %}
+    </section>
 {% endblock %}
