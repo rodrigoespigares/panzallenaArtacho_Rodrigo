@@ -60,8 +60,8 @@ class ProductoType extends AbstractType
         ])
         ->add('foto', FileType::class, [
             'label' => 'Foto',
-            'mapped' => false, // No mapea directamente a una propiedad del objeto
-            'required' => false, // La foto no es obligatoria
+            'mapped' => false,
+            'required' => true,
             'constraints' => [
                 new File([
                     'maxSize' => '1024k',
@@ -71,6 +71,9 @@ class ProductoType extends AbstractType
                         'image/png',
                     ],
                     'mimeTypesMessage' => 'Por favor, sube una imagen JPEG o PNG válida.',
+                ]),
+                new NotBlank([
+                    'message' => 'La foto es obligatoria.',
                 ]),
             ],
         ])
