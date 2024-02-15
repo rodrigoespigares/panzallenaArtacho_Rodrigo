@@ -13,7 +13,6 @@ class UserIsVerified implements UserCheckerInterface
     {
 
         if (!$user instanceof AppUser){
-            die("holaa");
             return;
         }
         if (!$user->isVerified()){

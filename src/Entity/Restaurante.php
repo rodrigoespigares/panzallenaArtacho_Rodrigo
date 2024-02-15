@@ -44,6 +44,11 @@ class Restaurante implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 200)]
     private ?string $direccion = null;
 
+    public function getId(): ?int
+    {
+        return $this->cod_res;
+    }
+    
     public function getCod_res(): ?int
     {
         return $this->cod_res;

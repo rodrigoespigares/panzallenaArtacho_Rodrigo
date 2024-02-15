@@ -288,7 +288,7 @@ class AdminController extends AbstractController
     {
         $restaurante = new Restaurante();
         $user = new Restaurante();
-        $form = $this->createForm(Admin_RegistrationFormType::class, $restaurante);
+        $form = $this->createForm(Admin_RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -299,14 +299,13 @@ class AdminController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-            $user->setEmail($form->get('email')->getData());
             $entityManager->persist($user);
             $entityManager->flush();
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address('zoologicoiesfa@gmail.com', 'Departamento de Administracion'))
+                    ->from(new Address('restaurante@gmail.com', 'Departamento de Administracion'))
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')

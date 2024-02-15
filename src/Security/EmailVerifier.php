@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Entity\Restaurante;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,12 +22,14 @@ class EmailVerifier
 
     public function sendEmailConfirmation(string $verifyEmailRouteName, UserInterface $user, TemplatedEmail $email): void
     {
-        $signatureComponents = $this->verifyEmailHelper->generateSignature(
-            $verifyEmailRouteName,
-            $user->getCod_res(),
-            $user->getEmail()
-        );
-
+        if ($user instanceof Restaurante) {
+            $signatureComponents = $this->verifyEmailHelper->generateSignature(
+                $verifyEmailRouteName,
+                $user->getEmail(),
+                $user->getEmail(),
+                ['cod_res' => $user->getId()]
+            );
+        }
         $context = $email->getContext();
         $context['signedUrl'] = $signatureComponents->getSignedUrl();
         $context['expiresAtMessageKey'] = $signatureComponents->getExpirationMessageKey();
@@ -42,9 +45,12 @@ class EmailVerifier
      */
     public function handleEmailConfirmation(Request $request, UserInterface $user): void
     {
-        $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getCod_res(), $user->getEmail());
+        if ($user instanceof Restaurante) {
+            $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getEmail(), $user->getEmail());
 
-        $user->setIsVerified(true);
+            $user->setIsVerified(true);
+        }
+        
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
