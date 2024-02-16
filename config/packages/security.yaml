@@ -41,7 +41,7 @@ security:
         
         - { path: ^/admin/pedidos, roles: 'ROLE_ADMIN, ROLE_PEDIDOS' }
         - { path: ^/admin/, roles: 'ROLE_ADMIN' }
-        # - { path: ^/register, roles: 'ROLE_ADMIN' }
+        - { path: ^/register, roles: 'ROLE_ADMIN' }
         - { path: ^/index, roles: 'ROLE_RESTAURANTE' }
         - { path: ^/producto, roles: 'ROLE_RESTAURANTE' }
         - { path: ^/categoria, roles: 'ROLE_RESTAURANTE' }

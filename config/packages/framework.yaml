@@ -20,7 +20,7 @@ framework:
     mailer:
         dsn: 'sync://default'
 
-    # error_controller: App\Controller\ErrorController::show
+    error_controller: App\Controller\ErrorController::show
 
 when@test:
     framework:
